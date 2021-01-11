@@ -25,3 +25,4 @@ class PointCalcTest(unittest.TestCase):
 
         point = Point(expcost,10)
         self.assertEqual(103, point.getCost())
+
