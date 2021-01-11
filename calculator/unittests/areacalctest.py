@@ -14,7 +14,7 @@ class AreaCalcTest(unittest.TestCase):
     may be fine-tuned in an area in order to house more/less points as is
     needed."""
 
-    def Area1(self):
+    def test_flatflooding(self):
         """Creates an area out of multiple points.
         Function: Baseline area function"""
         # Points do not actually use any space, but are built up out of sections in the space.
@@ -24,7 +24,7 @@ class AreaCalcTest(unittest.TestCase):
         totalcost = mainarea.calc()
         self.assertEqual(totalcost,1400)
 
-    def Area2(self):
+    def test_variableflooding(self):
         """Creates an area out of multiple points with varying levels of water damage.
         Function: Apply Monte Carlo to increase accuracy of water damages by adding (very
         small) differences in water levels"""

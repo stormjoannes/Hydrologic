@@ -10,13 +10,13 @@ class PointCalcTest(unittest.TestCase):
     Points are defines as a 1 by 1 meter space in the property, although
     this can be finetuned."""
 
-    def SinglePoint1(self):
+    def test_costconstant(self):
         """Calculates the damage for a single point, using a constant value.
         Functionality: Base damage calculation."""
         point = Point(0.53,20)  # $/ml and ml's.
-        self.assertEqual(point.getCost(), 10.60)
+        self.assertEqual(10.6, point.getCost())
 
-    def SinglePoint2(self):
+    def test_costformula(self):
         """Calculates the damage for a single point, using a simple exponential formula function.
         Functionality: Damage calculation through supplied function."""
         def expcost(x):
@@ -24,4 +24,4 @@ class PointCalcTest(unittest.TestCase):
             return x**2 + 3
 
         point = Point(expcost,10)
-        self.assertEqual(point.getCost(), 103)
+        self.assertEqual(103, point.getCost())
