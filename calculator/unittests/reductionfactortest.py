@@ -58,6 +58,7 @@ class infrastructuretest(unittest.TestCase):
         """Tests a case in which the reduction factor should be 0."""
 
 
+
 class agriculturaltest(unittest.TestCase):
     """Tests the reductionfactors for agricultural damages."""
 

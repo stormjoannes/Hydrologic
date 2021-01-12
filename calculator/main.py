@@ -78,27 +78,5 @@ class Calc():
         self.month = month
 
         self.inunfactor = inundationdepthreductionfactor(self.type,self.subtype,self.inundepth)
-
         self.durfactor = durationreductionfactor(self.type, self.subtype, self.days)
-
         self.seasonfactor = seasonreductionfactor(self.type, self.subtype, self.month)
-
-# from decimal import Decimal
-#
-# class Point():
-#     """Defines a single point (as 1 m^2)"""
-#     def __init__(self, dpml, ml):
-#         self.cpml = dpml
-#         self.vol = ml
-#
-#     def getCost(self):
-#         if isinstance(self.cpml, int) or isinstance(self.cpml, float):  # If the cost parameter is a constant
-#             return float(Decimal(str(self.cpml)) * Decimal(str(self.vol)))  # Deze hele workaround om een float inaccuracy op te lossen
-#         elif callable(self.cpml):  # If the cost parameter is a function
-#             return self.cpml(self.vol)
-#         else:
-#             raise Exception("Invalid parameters given")
-#
-# class Area():
-#     """Defines an collection of points"""
-#     def __init__(self, pointcount,):
