@@ -57,7 +57,9 @@ class infrastructuretest(unittest.TestCase):
     def test_factorzero(self):
         """Tests a case in which the reduction factor should be 0."""
 
+
 class agriculturaltest(unittest.TestCase):
     """Tests the reductionfactors for agricultural damages."""
+
     def test_factorzero(self):
         """Tests a case in which the reduction factor should be 0."""
