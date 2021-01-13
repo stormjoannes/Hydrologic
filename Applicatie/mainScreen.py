@@ -29,6 +29,7 @@ if __name__ == '__main__':
                 dcc.Dropdown(
                     options=[
                         {'label': 'Ondiep', 'value': 'Ondiep'},
+                        {'label': 'Witte Vrouwen', 'value': 'Witte Vrouwen'},
                     ],
                     value='Initial Value',
                     id='buurt',
@@ -124,7 +125,7 @@ if __name__ == '__main__':
 
             html.Div([
                 html.Div('TEST', id='output_div', style={'color': 'white', 'fontSize': 30, 'text-align': 'center'})
-            ], style={'marginBottom': 25, 'marginTop': 0, 'display': 'flex', 'backgroundColor': 'black'}),
+            ], style={'marginBottom': 25, 'marginTop': 0, 'display': 'flex', 'backgroundColor': 'MainBackground'}),
 
         ], style={'marginBottom': 25, 'marginLeft': 75, 'display': 'flex', 'backgroundColor': colors['MainBackground']}),
 
@@ -134,18 +135,30 @@ if __name__ == '__main__':
 
     @app.callback(Output('output_div', 'children'),
                   Input('submitButton', 'n_clicks'),
-                  Input('buurt', 'value'),
-                  Input('bebouwing', 'value'),
-                  Input('landbouw', 'value'),
-                  Input('natuur', 'value'),
-                  Input('regenval', 'value'),
-                  Input('waterafvoer', 'value'),
-                  Input('scenario', 'value'))
+                  State('buurt', 'value'),
+                  State('bebouwing', 'value'),
+                  State('landbouw', 'value'),
+                  State('natuur', 'value'),
+                  State('regenval', 'value'),
+                  State('waterafvoer', 'value'),
+                  State('scenario', 'value'))
 
     def update_output(clicks, gekozen_buurt, bebouwing, landbouw, natuur, regenval, waterafvoer, scenario):
         antwoorden = [gekozen_buurt, bebouwing, landbouw, natuur, regenval, waterafvoer, scenario]
         print(clicks)
-        if 'Initial Value' not in antwoorden and clicks != 0:
+        if bebouwing != 'Natuur en Recreatie' and bebouwing != 'Land- en Akkerbouw':
+            antwoorden.remove(landbouw)
+            antwoorden.remove(natuur)
+        else:
+            if bebouwing != 'Natuur en Recreatie':
+                antwoorden.remove(natuur)
+            else:
+                antwoorden.remove(landbouw)
+
+        print(antwoorden)
+        if 'Initial Value' not in antwoorden and None not in antwoorden:
             return gekozen_buurt, bebouwing, landbouw, natuur, regenval, waterafvoer, scenario
+        else:
+            return 'Vul de nodige parameters in'
 
     app.run_server(debug=True)
