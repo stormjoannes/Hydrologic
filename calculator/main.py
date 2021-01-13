@@ -94,9 +94,8 @@ class Calc():
 
         # H
         self.damagedata = \
-            {"URBAN":
+            {"bebouwing":
                 {
-                    "BEBOUWING": (163, 380, 271),
                     "ONDERWIJS": (163, 380, 271),
                     "INDUSTRIE": (163, 380, 271),
                     "WINKEL": (163, 380, 271),
@@ -116,7 +115,7 @@ class Calc():
                     "TERITAIR": (760, 760, 760),
                     "OVERIG": (760, 760, 760)
                 },
-            "AGRICULTURE":
+            "landbouw":
                 {
                     "GRAS":         (1033,1203,1094),
                     "GRANEN":       (1011,2617,1691),
@@ -128,7 +127,7 @@ class Calc():
                     "HOOGSTAM":          (63175,114502,76165),
                     "GREENHOUSE":        (459743,492590,473839)
                 },
-            "NATURE":
+            "natuur":
                 {
                     "SPORTPARKEN":      (760,760,760),
                     "TERREINEN":        (760,760,760),
