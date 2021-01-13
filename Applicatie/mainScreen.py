@@ -124,7 +124,7 @@ if __name__ == '__main__':
 
             html.Div([
                 html.Div('TEST', id='output_div', style={'color': 'white', 'fontSize': 30, 'text-align': 'center'})
-            ], style={'marginBottom': 25, 'marginTop': 0, 'display': 'flex', 'backgroundColor': colors['MainBackground']}),
+            ], style={'marginBottom': 25, 'marginTop': 0, 'display': 'flex', 'backgroundColor': 'black'}),
 
         ], style={'marginBottom': 25, 'marginLeft': 75, 'display': 'flex', 'backgroundColor': colors['MainBackground']}),
 
@@ -132,19 +132,20 @@ if __name__ == '__main__':
 
     ], style={'columnCount': 1, 'backgroundColor': colors['MainBackground']})
 
-    @app.callback(
-        Output('buurt', 'value'),
-        Input('buurt', 'value')
-    )
-    def setBuurt(gekozen_buurt):
-        return gekozen_buurt
-
     @app.callback(Output('output_div', 'children'),
-                  Input('submitButton', 'n_clicks'))
+                  Input('submitButton', 'n_clicks'),
+                  Input('buurt', 'value'),
+                  Input('bebouwing', 'value'),
+                  Input('landbouw', 'value'),
+                  Input('natuur', 'value'),
+                  Input('regenval', 'value'),
+                  Input('waterafvoer', 'value'),
+                  Input('scenario', 'value'))
 
-    def update_output(clicks, gekozen_buurt):
-        if clicks is not None:
-            print(gekozen_buurt)
-            return 'hij doet hettt'
+    def update_output(clicks, gekozen_buurt, bebouwing, landbouw, natuur, regenval, waterafvoer, scenario):
+        antwoorden = [gekozen_buurt, bebouwing, landbouw, natuur, regenval, waterafvoer, scenario]
+        print(clicks)
+        if 'Initial Value' not in antwoorden and clicks != 0:
+            return gekozen_buurt, bebouwing, landbouw, natuur, regenval, waterafvoer, scenario
 
     app.run_server(debug=True)
