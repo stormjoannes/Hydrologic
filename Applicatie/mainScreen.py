@@ -38,7 +38,7 @@ if __name__ == '__main__':
                            'marginBottom': 10}
                 ),
 
-                html.Label('Bebouwing', style={'marginLeft': 22.5}),
+                html.Label('Categorie', style={'marginLeft': 22.5}),
                 dcc.Dropdown(
                     options=[
                         {'label': 'Gezondheid', 'value': 'Gezondheid'},
@@ -60,8 +60,8 @@ if __name__ == '__main__':
                            'marginBottom': 10}
                 ),
 
-                html.Label("Als 'Land- en Akkerbouw' is gekozen", style={'marginLeft': 22.5, 'display':'none'},
-                           id='landbouwLabel'),
+                html.Label("Subcategorie", style={'marginLeft': 22.5, 'display':'none'},
+                           id='subcategorie'),
                 dcc.Dropdown(
                     options=[
                         {'label': 'Agrarisch gras', 'value': 'Agrarisch gras'},
@@ -81,8 +81,8 @@ if __name__ == '__main__':
                            'marginBottom': 10, 'display':'none'}
                 ),
 
-                html.Label("Als 'Natuur en Recreatie' is gekozen", style={'marginLeft': 22.5, 'display':'none'},
-                           id= 'natuurLabel'),
+                # html.Label("Subcategorie", style={'marginLeft': 22.5, 'display':'none'},
+                #            id= 'natuurLabel'),
                 dcc.Dropdown(
                     options=[
                         {'label': 'Sportparken', 'value': 'Sportparken'},
@@ -128,32 +128,29 @@ if __name__ == '__main__':
 
     ], style={'columnCount': 1, 'backgroundColor': colors['MainBackground']})
 
-    @app.callback(Output('natuurLabel', 'style'),
+    @app.callback(Output('subcategorie', 'style'),
                   Output('natuur', 'style'),
-                  Output('landbouwLabel', 'style'),
+                  # Output('landbouwLabel', 'style'),
                   Output('landbouw', 'style'),
                   Input('bebouwing', 'value'))
 
     def update_style(bebouwing):
         if bebouwing == 'Natuur en Recreatie':
             return {'marginLeft': 22.5, 'display':'block'}, {'width': '60%', 'padding': 3, 'verticalAlign': 'middle',
-                                                             'marginLeft': 10, 'marginBottom': 10, 'display':'block'}, \
-                   {'marginLeft': 22.5, 'display':'none'}, {'width': '60%', 'padding': 3,
-                                                            'verticalAlign': 'middle', 'marginLeft': 10,
-                                                            'marginBottom': 10, 'display':'none'}
+                'marginLeft': 10, 'marginBottom': 10, 'display':'block'}, \
+                {'width': '60%', 'padding': 3, 'verticalAlign': 'middle',
+                 'marginLeft': 10, 'marginBottom': 10, 'display':'none'}
 
         elif bebouwing == 'Land- en Akkerbouw':
-            return {'marginLeft': 22.5, 'display':'none'}, {'width': '60%', 'padding': 3, 'verticalAlign': 'middle',
-                                                            'marginLeft': 10,'marginBottom': 10, 'display':'none'}, \
-                   {'marginLeft': 22.5, 'display':'block'}, {'width': '60%', 'padding': 3,
-                                                             'verticalAlign': 'middle', 'marginLeft': 10,
-                                                             'marginBottom': 10, 'display':'block'}
+            return {'marginLeft': 22.5, 'display':'block'}, {'width': '60%', 'padding': 3, 'verticalAlign': 'middle',
+                    'marginLeft': 10,'marginBottom': 10, 'display':'none'}, \
+                   {'width': '60%', 'padding': 3, 'verticalAlign': 'middle', 'marginLeft': 10,
+                    'marginBottom': 10, 'display':'block'}
         else:
             return {'marginLeft': 22.5, 'display': 'none'}, {'width': '60%', 'padding': 3, 'verticalAlign': 'middle',
-                                                             'marginLeft': 10, 'marginBottom': 10, 'display': 'none'}, \
-                   {'marginLeft': 22.5, 'display':'none'}, {'width': '60%', 'padding': 3,
-                                                            'verticalAlign': 'middle', 'marginLeft': 10,
-                                                            'marginBottom': 10, 'display':'none'}
+                    'marginLeft': 10, 'marginBottom': 10, 'display': 'none'}, \
+                   {'width': '60%', 'padding': 3, 'verticalAlign': 'middle', 'marginLeft': 10,
+                    'marginBottom': 10, 'display':'none'}
 
     @app.callback(Output('output_div', 'children'),
                   Input('submitButton', 'n_clicks'),
