@@ -37,6 +37,8 @@ def get_type(subtype):
     landbouw = ['gras', 'granen', 'mais', 'aardappelen', 'overige gebruiksfunctie', 'fruitteelt', 'bloembollen', 'hoogstam', 'greenhouse']
     natuur = ['sportparken', 'terreinen', 'begraafplaatsen', 'volkstuinen', 'recreatie', 'groen', 'overige gebruiksfunctie']
 
+    type = ""
+
     # return type based on subtype
     if subtype in bebouwing:
         type = 'bebouwing'
@@ -46,6 +48,8 @@ def get_type(subtype):
         type = 'landbouw'
     elif subtype in natuur:
         type = 'natuur'
+    else:
+        type = 'none'
 
     return type
 
@@ -65,14 +69,13 @@ class Building:
 
 
 
-
 # dit is een test path dit wordt later vervangen met het bestand wat van de applicatie komt
-data = get_data('../Ondiep/pandPolygon_Area075.shp')
-print(data)
-test = set()
+data = get_data('../../Ondiep/pandPolygon_Area075.shp')
+buildings = []
 for x in data:
-    test.add(x[1])
-print(test)
+    buidling = Building(x[1], x[0], x[2], 'hoog', '10', '7')
+    buildings.append(buidling)
+
 
 # # code om tif bestand om te zetten in een numpy array
 # img = Image.open('../Ondiep/resultaten/waterOpStraat.tif')
