@@ -20,81 +20,44 @@ if __name__ == '__main__':
     app.layout = html.Div([
 
         html.Div([
-            html.Div('Waterschade Voorspeller', style={'color': 'white', 'fontSize': 30, 'text-align': 'center'})
-        ], style={'marginBottom': 25, 'marginTop': 0, 'backgroundColor': colors['HeaderBackground']}),
+            html.Div('Waterschade Voorspeller', style={'color': 'white',
+                                                       'fontSize': 30,
+                                                       'text-align': 'center'})
+        ], style={'marginBottom': 25,
+                  'marginTop': 0,
+                  'backgroundColor': colors['HeaderBackground']}),
 
         html.Div([
             html.Div([
 
-                html.Label('Buurt', style={'marginLeft': 22.5}),
-                dcc.Dropdown(
-                    options=[
-                        {'label': 'Ondiep', 'value': 'Ondiep'},
-                        {'label': 'Witte Vrouwen', 'value': 'Witte Vrouwen'},
-                    ],
-                    value='Initial Value',
-                    id='buurt',
-                    style={'width': '60%', 'padding': 3, 'verticalAlign': 'middle', 'marginLeft': 10,
-                           'marginBottom': 10}
+                html.Label('Buurt .SHP File', style={'marginLeft': 22.5}),
+                dcc.Upload(
+                    id='buurtFile',
+                    children=html.Div([
+                        'Drag and Drop or ',
+                        html.A('Select Files')
+                    ]),
+                    style={'width': '60%',
+                           'padding': 3,
+                           'verticalAlign': 'middle',
+                           'marginLeft': 22,
+                           'marginBottom': 10,
+                           'lineHeight': '60px',
+                           'borderWidth': '1px',
+                           'borderStyle': 'dashed',
+                           'borderRadius': '5px',
+                           'textAlign': 'center',
+                           'background': colors['SubmitButtonBackground']
+                           },
+                    # Allow multiple files to be uploaded
+                    multiple=False
                 ),
 
-                html.Label('Categorie', style={'marginLeft': 22.5}),
-                dcc.Dropdown(
-                    options=[
-                        {'label': 'Gezondheid', 'value': 'Gezondheid'},
-                        {'label': 'Onderwijs', 'value': 'Onderwijs'},
-                        {'label': 'Industrie', 'value': 'Industrie'},
-                        {'label': 'Winkel', 'value': 'Winkel'},
-                        {'label': 'Kantoor', 'value': 'Kantoor'},
-                        {'label': 'Logies', 'value': 'Logies'},
-                        {'label': 'Woon', 'value': 'Woon'},
-                        {'label': 'Bijeenkomst', 'value': 'Bijeenkomst'},
-                        {'label': 'Cel', 'value': 'Cel'},
-                        {'label': 'Sport', 'value': 'Sport'},
-                        {'label': 'Land- en Akkerbouw', 'value': 'Land- en Akkerbouw'},
-                        {'label': 'Natuur en Recreatie', 'value': 'Natuur en Recreatie'},
-                    ],
-                    value='Initial Value',
-                    id='categorie',
-                    style={'width': '60%', 'padding': 3, 'verticalAlign': 'middle', 'marginLeft': 10,
-                           'marginBottom': 10}
-                ),
+                html.Label('Hoelang duurt de reparatie (in dagen). Max 20 dagen', style={'marginLeft': 22.5}),
+                    dcc.Input(value='dagen', type='number', style={'marginLeft': 22, 'width':'20%'}),
 
-                html.Label("Subcategorie", style={'marginLeft': 22.5, 'display':'none'},
-                           id='subcategorie'),
-                dcc.Dropdown(
-                    options=[
-                        {'label': 'Agrarisch gras', 'value': 'Agrarisch gras'},
-                        {'label': 'Granen', 'value': 'Granen'},
-                        {'label': 'Maïs', 'value': 'Maïs'},
-                        {'label': 'Aardappelen', 'value': 'Aardappelen'},
-                        {'label': 'Bieten', 'value': 'Bieten'},
-                        {'label': 'Overige landbouwgewassen', 'value': 'Overige landbouwgewassen'},
-                        {'label': 'Fruitteelt', 'value': 'Fruitteelt'},
-                        {'label': 'Bloembollen', 'value': 'Bloembollen'},
-                        {'label': 'Hoogstam', 'value': 'Hoogstam'},
-                        {'label': 'Kassen / glastuinbouw', 'value': 'Kassen / glastuinbouw'},
-                    ],
-                    value='Initial Value',
-                    id='landbouw',
-                    style={'width': '60%', 'padding': 3, 'verticalAlign': 'middle', 'marginLeft': 10,
-                           'marginBottom': 10, 'display':'none'}
-                ),
-
-                dcc.Dropdown(
-                    options=[
-                        {'label': 'Sportparken', 'value': 'Sportparken'},
-                        {'label': 'Terreinen', 'value': 'Terreinen'},
-                        {'label': 'Begraafplaatsen', 'value': 'Begraafplaatsen'},
-                        {'label': 'Volkstuinen', 'value': 'Volkstuinen'},
-                        {'label': 'Recreatie', 'value': 'Recreatie'},
-                        {'label': 'Groen in stedelijk gebied', 'value': 'Groen in stedelijk gebied'},
-                    ],
-                    value='Initial Value',
-                    id='natuur',
-                    style={'width': '60%', 'padding': 3, 'verticalAlign': 'middle', 'marginLeft': 10,
-                           'marginBottom': 10, 'display':'none'}
-                ),
+                html.Label('In welke maand vindt de reparatie plaats', style={'marginLeft': 22.5}),
+                    dcc.Input(value='maand', type='number', style={'marginLeft': 22, 'width':'20%'}),
 
                 html.Label('Scenario', style={'marginLeft': 22.5}),
                 dcc.RadioItems(
@@ -109,69 +72,48 @@ if __name__ == '__main__':
                 ),
 
                 html.Button('Submit', id='submitButton', n_clicks=0,
-                            style={'width': '20%', 'marginLeft': 220, 'marginBottom': 40,
-                                   'backgroundColor': colors[
-                                       'SubmitButtonBackground']}),
+                            style={'width': '20%',
+                                   'marginTop': 40,
+                                   'marginLeft': 140,
+                                   'marginBottom': 440,
+                                   'backgroundColor': colors['SubmitButtonBackground']}
+                            ),
 
-            ], id='input_div', style={'width': '40%', 'marginBottom': 25, 'marginTop': 0, 'display': 'flex',
+            ], id='input_div', style={'width': '40%',
+                                      'marginBottom': 25,
+                                      'marginTop': 0,
+                                      'display': 'flex',
                                       'flexDirection': 'column',
-                      'backgroundColor': colors['MainBackground']}),
+                                      'backgroundColor': colors['MainBackground']}),
 
             html.Div([
-                html.Div('TEST', id='output_div', style={'color': 'white', 'fontSize': 30, 'text-align': 'center'})
-            ], style={'marginBottom': 25, 'marginTop': 0, 'display': 'flex', 'backgroundColor': 'MainBackground'}),
+                html.Div('Berekenen waterschade...', id='output_div', style={'color': 'white', 'fontSize': 30, 'text-align': 'center'})
+            ], style={'marginBottom': 25,
+                      'marginTop': 0,
+                      'display': 'flex',
+                      'backgroundColor': 'MainBackground'}
+            ),
 
-        ], style={'marginBottom': 25, 'marginLeft': 75, 'display': 'flex',
+        ], style={'marginBottom': 25,
+                  'marginLeft': 75,
+                  'display': 'flex',
                   'backgroundColor': colors['MainBackground']}),
 
     ], style={'columnCount': 1, 'backgroundColor': colors['MainBackground']})
 
-    @app.callback(Output('subcategorie', 'style'),
-                  Output('natuur', 'style'),
-                  Output('landbouw', 'style'),
-                  Input('categorie', 'value'))
-
-    def update_style(categorie):
-        if categorie == 'Natuur en Recreatie':
-            return {'marginLeft': 22.5, 'display':'block'}, {'width': '60%', 'padding': 3, 'verticalAlign': 'middle',
-                'marginLeft': 10, 'marginBottom': 10, 'display':'block'}, \
-                {'width': '60%', 'padding': 3, 'verticalAlign': 'middle',
-                 'marginLeft': 10, 'marginBottom': 10, 'display':'none'}
-
-        elif categorie == 'Land- en Akkerbouw':
-            return {'marginLeft': 22.5, 'display':'block'}, {'width': '60%', 'padding': 3, 'verticalAlign': 'middle',
-                    'marginLeft': 10,'marginBottom': 10, 'display':'none'}, \
-                   {'width': '60%', 'padding': 3, 'verticalAlign': 'middle', 'marginLeft': 10,
-                    'marginBottom': 10, 'display':'block'}
-        else:
-            return {'marginLeft': 22.5, 'display': 'none'}, {'width': '60%', 'padding': 3, 'verticalAlign': 'middle',
-                    'marginLeft': 10, 'marginBottom': 10, 'display': 'none'}, \
-                   {'width': '60%', 'padding': 3, 'verticalAlign': 'middle', 'marginLeft': 10,
-                    'marginBottom': 10, 'display':'none'}
-
     @app.callback(Output('output_div', 'children'),
                   Input('submitButton', 'n_clicks'),
-                  State('buurt', 'value'),
-                  State('categorie', 'value'),
-                  State('landbouw', 'value'),
-                  State('natuur', 'value'),
+                  State('buurtFile', 'filename'),
                   State('scenario', 'value'))
 
-    def update_output(clicks, gekozen_buurt, categorie, landbouw, natuur, scenario):
-        antwoorden = [gekozen_buurt, categorie, landbouw, natuur, scenario]
-        print(clicks)
-        if categorie != 'Natuur en Recreatie' and categorie != 'Land- en Akkerbouw':
-            antwoorden.remove(landbouw)
-            antwoorden.remove(natuur)
-        else:
-            if categorie != 'Natuur en Recreatie':
-                antwoorden.remove(natuur)
-            else:
-                antwoorden.remove(landbouw)
+    def update_output(clicks, gekozen_buurtFile, scenario):
+        antwoorden = [gekozen_buurtFile, scenario]
 
-        print(antwoorden)
         if 'Initial Value' not in antwoorden and None not in antwoorden:
-            return gekozen_buurt, categorie, landbouw, natuur, scenario
+            if gekozen_buurtFile.split(".")[1] == 'shp':
+                return gekozen_buurtFile, scenario
+            else:
+                return 'Het gekozen bestand moet een .shp file zijn'
         else:
             return 'Vul de nodige parameters in'
 
