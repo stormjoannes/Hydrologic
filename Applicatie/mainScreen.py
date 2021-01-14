@@ -141,15 +141,10 @@ if __name__ == '__main__':
                   Output('natuur', 'style'),
                   Output('land', 'style'),
                   Output('landbouw', 'style'),
-                  Input('bebouwing', 'value'),
-                  State('nature', 'style'),
-                  State('land', 'style'),
-                  State('bebouwing', 'value'))
+                  Input('bebouwing', 'value'))
 
-    def update_style(input, natuur, landbouw, bebouwing):
-        print(input, natuur, bebouwing)
+    def update_style(bebouwing):
         if bebouwing == 'Natuur en Recreatie':
-            print('hoi')
             return {'marginLeft': 22.5, 'display':'block'}, {'width': '60%', 'padding': 3, 'verticalAlign': 'middle', 'marginLeft': 10,
                            'marginBottom': 10, 'display':'block'}, {'marginLeft': 22.5, 'display':'none'}, {'width': '60%', 'padding': 3, 'verticalAlign': 'middle', 'marginLeft': 10,
                            'marginBottom': 10, 'display':'none'}
