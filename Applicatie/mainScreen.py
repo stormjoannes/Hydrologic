@@ -60,7 +60,7 @@ if __name__ == '__main__':
                            'marginBottom': 10}
                 ),
 
-                html.Label("Als 'Land- en Akkerbouw' is gekozen", style={'marginLeft': 22.5, 'display':'none'}, id= 'land'),
+                html.Label("Als 'Land- en Akkerbouw' is gekozen", style={'marginLeft': 22.5, 'display':'none'}, id= 'landbouwLabel'),
                 dcc.Dropdown(
                     options=[
                         {'label': 'Agrarisch gras', 'value': 'Agrarisch gras'},
@@ -80,7 +80,7 @@ if __name__ == '__main__':
                            'marginBottom': 10, 'display':'none'}
                 ),
 
-                html.Label("Als 'Natuur en Recreatie' is gekozen", style={'marginLeft': 22.5, 'display':'none'}, id= 'nature'),
+                html.Label("Als 'Natuur en Recreatie' is gekozen", style={'marginLeft': 22.5, 'display':'none'}, id= 'natuurLabel'),
                 dcc.Dropdown(
                     options=[
                         {'label': 'Sportparken', 'value': 'Sportparken'},
@@ -137,9 +137,9 @@ if __name__ == '__main__':
 
     ], style={'columnCount': 1, 'backgroundColor': colors['MainBackground']})
 
-    @app.callback(Output('nature', 'style'),
+    @app.callback(Output('natuurLabel', 'style'),
                   Output('natuur', 'style'),
-                  Output('land', 'style'),
+                  Output('landbouwLabel', 'style'),
                   Output('landbouw', 'style'),
                   Input('bebouwing', 'value'))
 
