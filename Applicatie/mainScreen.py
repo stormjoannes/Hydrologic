@@ -55,7 +55,7 @@ if __name__ == '__main__':
                         {'label': 'Natuur en Recreatie', 'value': 'Natuur en Recreatie'},
                     ],
                     value='Initial Value',
-                    id='bebouwing',
+                    id='categorie',
                     style={'width': '60%', 'padding': 3, 'verticalAlign': 'middle', 'marginLeft': 10,
                            'marginBottom': 10}
                 ),
@@ -129,16 +129,16 @@ if __name__ == '__main__':
     @app.callback(Output('subcategorie', 'style'),
                   Output('natuur', 'style'),
                   Output('landbouw', 'style'),
-                  Input('bebouwing', 'value'))
+                  Input('categorie', 'value'))
 
-    def update_style(bebouwing):
-        if bebouwing == 'Natuur en Recreatie':
+    def update_style(categorie):
+        if categorie == 'Natuur en Recreatie':
             return {'marginLeft': 22.5, 'display':'block'}, {'width': '60%', 'padding': 3, 'verticalAlign': 'middle',
                 'marginLeft': 10, 'marginBottom': 10, 'display':'block'}, \
                 {'width': '60%', 'padding': 3, 'verticalAlign': 'middle',
                  'marginLeft': 10, 'marginBottom': 10, 'display':'none'}
 
-        elif bebouwing == 'Land- en Akkerbouw':
+        elif categorie == 'Land- en Akkerbouw':
             return {'marginLeft': 22.5, 'display':'block'}, {'width': '60%', 'padding': 3, 'verticalAlign': 'middle',
                     'marginLeft': 10,'marginBottom': 10, 'display':'none'}, \
                    {'width': '60%', 'padding': 3, 'verticalAlign': 'middle', 'marginLeft': 10,
@@ -152,26 +152,26 @@ if __name__ == '__main__':
     @app.callback(Output('output_div', 'children'),
                   Input('submitButton', 'n_clicks'),
                   State('buurt', 'value'),
-                  State('bebouwing', 'value'),
+                  State('categorie', 'value'),
                   State('landbouw', 'value'),
                   State('natuur', 'value'),
                   State('scenario', 'value'))
 
-    def update_output(clicks, gekozen_buurt, bebouwing, landbouw, natuur, scenario):
-        antwoorden = [gekozen_buurt, bebouwing, landbouw, natuur, scenario]
+    def update_output(clicks, gekozen_buurt, categorie, landbouw, natuur, scenario):
+        antwoorden = [gekozen_buurt, categorie, landbouw, natuur, scenario]
         print(clicks)
-        if bebouwing != 'Natuur en Recreatie' and bebouwing != 'Land- en Akkerbouw':
+        if categorie != 'Natuur en Recreatie' and categorie != 'Land- en Akkerbouw':
             antwoorden.remove(landbouw)
             antwoorden.remove(natuur)
         else:
-            if bebouwing != 'Natuur en Recreatie':
+            if categorie != 'Natuur en Recreatie':
                 antwoorden.remove(natuur)
             else:
                 antwoorden.remove(landbouw)
 
         print(antwoorden)
         if 'Initial Value' not in antwoorden and None not in antwoorden:
-            return gekozen_buurt, bebouwing, landbouw, natuur, scenario
+            return gekozen_buurt, categorie, landbouw, natuur, scenario
         else:
             return 'Vul de nodige parameters in'
 
