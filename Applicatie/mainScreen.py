@@ -40,19 +40,24 @@ if __name__ == '__main__':
                     style={'width': '60%',
                            'padding': 3,
                            'verticalAlign': 'middle',
-                           'marginLeft': 10,
+                           'marginLeft': 22,
                            'marginBottom': 10,
                            'lineHeight': '60px',
                            'borderWidth': '1px',
                            'borderStyle': 'dashed',
                            'borderRadius': '5px',
                            'textAlign': 'center',
-                           'margin': '10px',
                            'background': colors['SubmitButtonBackground']
                            },
                     # Allow multiple files to be uploaded
                     multiple=False
                 ),
+
+                html.Label('Hoelang duurt de reparatie (in dagen). Max 20 dagen', style={'marginLeft': 22.5}),
+                    dcc.Input(value='dagen', type='number', style={'marginLeft': 22, 'width':'20%'}),
+
+                html.Label('In welke maand vindt de reparatie plaats', style={'marginLeft': 22.5}),
+                    dcc.Input(value='maand', type='number', style={'marginLeft': 22, 'width':'20%'}),
 
                 html.Label('Scenario', style={'marginLeft': 22.5}),
                 dcc.RadioItems(
