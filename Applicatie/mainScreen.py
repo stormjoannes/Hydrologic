@@ -81,8 +81,6 @@ if __name__ == '__main__':
                            'marginBottom': 10, 'display':'none'}
                 ),
 
-                # html.Label("Subcategorie", style={'marginLeft': 22.5, 'display':'none'},
-                #            id= 'natuurLabel'),
                 dcc.Dropdown(
                     options=[
                         {'label': 'Sportparken', 'value': 'Sportparken'},
@@ -130,7 +128,6 @@ if __name__ == '__main__':
 
     @app.callback(Output('subcategorie', 'style'),
                   Output('natuur', 'style'),
-                  # Output('landbouwLabel', 'style'),
                   Output('landbouw', 'style'),
                   Input('bebouwing', 'value'))
 
