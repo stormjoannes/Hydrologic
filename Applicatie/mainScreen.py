@@ -60,7 +60,7 @@ if __name__ == '__main__':
                            'marginBottom': 10}
                 ),
 
-                html.Label("Als 'Land- en Akkerbouw' is gekozen", style={'marginLeft': 22.5}),
+                html.Label("Als 'Land- en Akkerbouw' is gekozen", style={'marginLeft': 22.5, 'display':'none'}, id= 'land'),
                 dcc.Dropdown(
                     options=[
                         {'label': 'Agrarisch gras', 'value': 'Agrarisch gras'},
@@ -77,10 +77,10 @@ if __name__ == '__main__':
                     value='Initial Value',
                     id='landbouw',
                     style={'width': '60%', 'padding': 3, 'verticalAlign': 'middle', 'marginLeft': 10,
-                           'marginBottom': 10}
+                           'marginBottom': 10, 'display':'none'}
                 ),
 
-                html.Label("Als 'Natuur en Recreatie' is gekozen", style={'marginLeft': 22.5}),
+                html.Label("Als 'Natuur en Recreatie' is gekozen", style={'marginLeft': 22.5, 'display':'none'}, id= 'nature'),
                 dcc.Dropdown(
                     options=[
                         {'label': 'Sportparken', 'value': 'Sportparken'},
@@ -93,7 +93,7 @@ if __name__ == '__main__':
                     value='Initial Value',
                     id='natuur',
                     style={'width': '60%', 'padding': 3, 'verticalAlign': 'middle', 'marginLeft': 10,
-                           'marginBottom': 10}
+                           'marginBottom': 10, 'display':'none'}
                 ),
 
                 html.Label('regenval in mm', style={'marginLeft': 22.5}),
@@ -125,7 +125,7 @@ if __name__ == '__main__':
                                    'backgroundColor': colors[
                                        'SubmitButtonBackground']}),
 
-            ], style={'width': '40%', 'marginBottom': 25, 'marginTop': 0, 'display': 'flex', 'flexDirection': 'column',
+            ], id='input_div', style={'width': '40%', 'marginBottom': 25, 'marginTop': 0, 'display': 'flex', 'flexDirection': 'column',
                       'backgroundColor': colors['MainBackground']}),
 
             html.Div([
@@ -135,9 +135,32 @@ if __name__ == '__main__':
         ], style={'marginBottom': 25, 'marginLeft': 75, 'display': 'flex',
                   'backgroundColor': colors['MainBackground']}),
 
-
-
     ], style={'columnCount': 1, 'backgroundColor': colors['MainBackground']})
+
+    @app.callback(Output('nature', 'style'),
+                  Output('natuur', 'style'),
+                  Output('land', 'style'),
+                  Output('landbouw', 'style'),
+                  Input('bebouwing', 'value'),
+                  State('nature', 'style'),
+                  State('land', 'style'),
+                  State('bebouwing', 'value'))
+
+    def update_style(input, natuur, landbouw, bebouwing):
+        print(input, natuur, bebouwing)
+        if bebouwing == 'Natuur en Recreatie':
+            print('hoi')
+            return {'marginLeft': 22.5, 'display':'block'}, {'width': '60%', 'padding': 3, 'verticalAlign': 'middle', 'marginLeft': 10,
+                           'marginBottom': 10, 'display':'block'}, {'marginLeft': 22.5, 'display':'none'}, {'width': '60%', 'padding': 3, 'verticalAlign': 'middle', 'marginLeft': 10,
+                           'marginBottom': 10, 'display':'none'}
+        elif bebouwing == 'Land- en Akkerbouw':
+            return {'marginLeft': 22.5, 'display':'none'}, {'width': '60%', 'padding': 3, 'verticalAlign': 'middle', 'marginLeft': 10,
+                           'marginBottom': 10, 'display':'none'}, {'marginLeft': 22.5, 'display':'block'}, {'width': '60%', 'padding': 3, 'verticalAlign': 'middle', 'marginLeft': 10,
+                           'marginBottom': 10, 'display':'block'}
+        else:
+            return {'marginLeft': 22.5, 'display': 'none'}, {'width': '60%', 'padding': 3, 'verticalAlign': 'middle', 'marginLeft': 10,
+                           'marginBottom': 10, 'display': 'none'}, {'marginLeft': 22.5, 'display':'none'}, {'width': '60%', 'padding': 3, 'verticalAlign': 'middle', 'marginLeft': 10,
+                           'marginBottom': 10, 'display':'none'}
 
     @app.callback(Output('output_div', 'children'),
                   Input('submitButton', 'n_clicks'),
