@@ -34,7 +34,8 @@ if __name__ == '__main__':
                     ],
                     value='Initial Value',
                     id='buurt',
-                    style={'width': '60%', 'padding': 3, 'verticalAlign': 'middle', 'marginLeft': 10, 'marginBottom': 10}
+                    style={'width': '60%', 'padding': 3, 'verticalAlign': 'middle', 'marginLeft': 10,
+                           'marginBottom': 10}
                 ),
 
                 html.Label('Bebouwing', style={'marginLeft': 22.5}),
@@ -55,7 +56,8 @@ if __name__ == '__main__':
                     ],
                     value='Initial Value',
                     id='bebouwing',
-                    style={'width': '60%', 'padding': 3, 'verticalAlign': 'middle', 'marginLeft': 10, 'marginBottom': 10}
+                    style={'width': '60%', 'padding': 3, 'verticalAlign': 'middle', 'marginLeft': 10,
+                           'marginBottom': 10}
                 ),
 
                 html.Label("Als 'Land- en Akkerbouw' is gekozen", style={'marginLeft': 22.5}),
@@ -74,7 +76,8 @@ if __name__ == '__main__':
                     ],
                     value='Initial Value',
                     id='landbouw',
-                    style={'width': '60%', 'padding': 3, 'verticalAlign': 'middle', 'marginLeft': 10, 'marginBottom': 10}
+                    style={'width': '60%', 'padding': 3, 'verticalAlign': 'middle', 'marginLeft': 10,
+                           'marginBottom': 10}
                 ),
 
                 html.Label("Als 'Natuur en Recreatie' is gekozen", style={'marginLeft': 22.5}),
@@ -89,7 +92,8 @@ if __name__ == '__main__':
                     ],
                     value='Initial Value',
                     id='natuur',
-                    style={'width': '60%', 'padding': 3, 'verticalAlign': 'middle', 'marginLeft': 10, 'marginBottom': 10}
+                    style={'width': '60%', 'padding': 3, 'verticalAlign': 'middle', 'marginLeft': 10,
+                           'marginBottom': 10}
                 ),
 
                 html.Label('regenval in mm', style={'marginLeft': 22.5}),
@@ -128,7 +132,8 @@ if __name__ == '__main__':
                 html.Div('TEST', id='output_div', style={'color': 'white', 'fontSize': 30, 'text-align': 'center'})
             ], style={'marginBottom': 25, 'marginTop': 0, 'display': 'flex', 'backgroundColor': 'MainBackground'}),
 
-        ], style={'marginBottom': 25, 'marginLeft': 75, 'display': 'flex', 'backgroundColor': colors['MainBackground']}),
+        ], style={'marginBottom': 25, 'marginLeft': 75, 'display': 'flex',
+                  'backgroundColor': colors['MainBackground']}),
 
 
 
