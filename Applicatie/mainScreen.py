@@ -52,7 +52,7 @@ if __name__ == '__main__':
                            'background': colors['SubmitButtonBackground']
                            },
                     # Allow multiple files to be uploaded
-                    multiple=False
+                    multiple=True
                 ),
 
                 html.Label('Hoelang duurt de reparatie (in dagen). Max 20 dagen',
