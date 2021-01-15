@@ -31,7 +31,7 @@ if __name__ == '__main__':
         html.Div([
             html.Div([
 
-                html.Label('Buurt .SHP File',
+                html.Label('Buurt .shp File',
                            style={'marginLeft': 22.5}),
                 dcc.Upload(
                     id='buurtFile',
