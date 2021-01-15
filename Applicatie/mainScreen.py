@@ -161,7 +161,11 @@ if __name__ == '__main__':
     def update_output(clicks, gekozen_buurtFiles, reparatieDagen, reparatieMaanden, scenario):
         antwoorden = [gekozen_buurtFiles, reparatieDagen, reparatieMaanden, scenario]
         if 'Initial Value' not in antwoorden and None not in antwoorden:
-            return create_data(gekozen_buurtFiles, reparatieDagen, reparatieMaanden, scenario, ['gebruiksdo', 'oppervlakt', 'MAX'])
+            if 0 < reparatieDagen < 20:
+                return create_data(gekozen_buurtFiles, reparatieDagen, reparatieMaanden, scenario, ['gebruiksdo', 'oppervlakt', 'MAX'])
+            else:
+                return 'Vul een minimum van 0 dagen en een maximum van 20 dagen in'
+
         else:
             return 'Vul de nodige gegevens in'
 
