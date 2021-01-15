@@ -31,13 +31,27 @@ if __name__ == '__main__':
         html.Div([
             html.Div([
 
-                html.Label('Buurt .shp File',
+                # html.Label('Buurt',
+                #            style={'marginLeft': 22.5}),
+                # dcc.Dropdown(
+                #     options=[
+                #         {'label': 'Ondiep', 'value': 'Ondiep'},
+                #         {'label': 'Witte Vrouwen', 'value': 'Witte Vrouwen'},
+                #         {'label': 'Ondiep', 'value': '3'},
+                #     ],
+                #     value='Initial Value',
+                #     id='gekozenBuurt',
+                #     style={'marginLeft': 11,
+                #            'width': '50%'}),
+
+                html.Label('Kies de benodigde files van de buurt',
                            style={'marginLeft': 22.5}),
                 dcc.Upload(
-                    id='buurtFile',
+                    id='buurtFiles',
                     children=html.Div([
                         'Drag and Drop or ',
-                        html.A('Select Files')
+                        html.A('Select Files',
+                               style={'color': 'white'})
                     ]),
                     style={'width': '60%',
                            'padding': 3,
@@ -139,18 +153,15 @@ if __name__ == '__main__':
 
     @app.callback(Output('output_div', 'children'),
                   Input('submitButton', 'n_clicks'),
-                  State('buurtFile', 'filename'),
+                  State('buurtFiles', 'filename'),
                   State('reparatieDagen', 'value'),
                   State('reparatieMaanden', 'value'),
                   State('scenario', 'value'))
 
-    def update_output(clicks, gekozen_buurtFile, reparatieDagen, reparatieMaanden, scenario):
-        antwoorden = [gekozen_buurtFile, reparatieDagen, reparatieMaanden, scenario]
+    def update_output(clicks, gekozen_buurtFiles, reparatieDagen, reparatieMaanden, scenario):
+        antwoorden = [gekozen_buurtFiles, reparatieDagen, reparatieMaanden, scenario]
         if 'Initial Value' not in antwoorden and None not in antwoorden:
-            if gekozen_buurtFile.split(".")[1] == 'shp':
-                return create_data(gekozen_buurtFile, reparatieDagen, reparatieMaanden, scenario, ['gebruiksdo', 'oppervlakt', 'MAX'])
-            else:
-                return 'Het gekozen bestand moet een .shp file zijn'
+            return create_data(gekozen_buurtFiles, reparatieDagen, reparatieMaanden, scenario, ['gebruiksdo', 'oppervlakt', 'MAX'])
         else:
             return 'Vul de nodige gegevens in'
 
