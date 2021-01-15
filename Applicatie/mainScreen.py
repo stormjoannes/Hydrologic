@@ -3,7 +3,7 @@ import dash_core_components as dcc
 import dash_html_components as html
 from dash.dependencies import Output, State, Input
 from calculator import main
-
+from buildings import create_data
 
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 
@@ -148,7 +148,7 @@ if __name__ == '__main__':
         antwoorden = [gekozen_buurtFile, reparatieDagen, reparatieMaanden, scenario]
         if 'Initial Value' not in antwoorden and None not in antwoorden:
             if gekozen_buurtFile.split(".")[1] == 'shp':
-                return gekozen_buurtFile, reparatieDagen, reparatieMaanden, scenario
+                return create_data(gekozen_buurtFile, reparatieDagen, reparatieMaanden, scenario, ['gebruiksdo', 'oppervlakt', 'MAX'])
             else:
                 return 'Het gekozen bestand moet een .shp file zijn'
         else:

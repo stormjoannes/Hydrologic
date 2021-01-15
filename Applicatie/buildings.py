@@ -1,14 +1,15 @@
-import numpy as np
-from PIL import Image
 import shapefile
 
 
-def get_data(file):
+def create_data(file, days, month, scenario, values):
+    print(file)
     # Shapefile reader is used to read .shp files so it can be used
     shpfile = shapefile.Reader(file)
     # get_attributes requires the shp file and the names of the attributes you want
-    attributes = get_attributes(['oppervlakt', 'gebruiksdo', 'MAX'], shpfile)
-    return attributes
+    attributes = get_attributes(values, shpfile)
+    buildings = create_buildings(attributes, days, month, scenario)
+
+    return buildings
 
 
 def get_attributes(attributes, file):
@@ -49,9 +50,21 @@ def get_type(subtype):
     elif subtype in natuur:
         type = 'natuur'
     else:
-        type = 'none'
+        type = 'unknown'
 
     return type
+
+
+def create_buildings(data, days, month, scenario):
+    buidlings = []
+    for x in data:
+        """ this line is slightly hardcoded because the attributes (data)
+            needs to be set in the correct order in the class.
+            if you want to edit the attributes or change the order somewhere this line needs to be updated as well """
+        building = Building(data[0], data[1], data[2], scenario, days, month)
+        buidlings.append(building)
+
+    return buidlings
 
 
 class Building:
@@ -67,16 +80,9 @@ class Building:
         self.type = get_type(self.subtype)
 
 
-
-
 # dit is een test path dit wordt later vervangen met het bestand wat van de applicatie komt
-data = get_data('../../Ondiep/pandPolygon_Area075.shp')
-buildings = []
-for x in data:
-    buidling = Building(x[1], x[0], x[2], 'hoog', '10', '7')
-    buildings.append(buidling)
-
-
+# data = create_data('../../Ondiep/pandPolygon_Area075.shp', 7, 10, 'hoog', ['gebruiksdo', 'oppervlakt', 'MAX'])
+# print(data)
 # # code om tif bestand om te zetten in een numpy array
 # img = Image.open('../Ondiep/resultaten/waterOpStraat.tif')
 # imnp = np.array(img)
