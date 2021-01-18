@@ -7,10 +7,33 @@ from buildings import create_data
 import plotly.graph_objects as go
 import plotly.express as px
 
-px.set_mapbox_access_token("pk.eyJ1IjoiY2hhcmxpZWNob2YiLCJhIjoiY2trMmozbzJwMGp1NDJwcW94dHAzdmYxZSJ9.PWhcvXLn2xNSZV_gkKpXbw")
-df = px.data.carshare()
-fig = px.scatter_mapbox(df, lat="centroid_lat", lon="centroid_lon",     color="peak_hour", size="car_hours",
-                  color_continuous_scale=px.colors.cyclical.IceFire, size_max=15, zoom=10)
+mapbox_access_token = "pk.eyJ1IjoiY2hhcmxpZWNob2YiLCJhIjoiY2trMmozbzJwMGp1NDJwcW94dHAzdmYxZSJ9.PWhcvXLn2xNSZV_gkKpXbw"
+fig = go.Figure(go.Scattermapbox(
+        lat=['52.1044958',
+             '52.1047415'],
+        lon=['5.0986251',
+             '5.0984616'],
+        mode='markers',
+        marker=go.scattermapbox.Marker(
+        ),
+        text=["Thijmes huis",
+              "overkant"],
+    ))
+
+fig.update_layout(
+    autosize=True,
+    hovermode='closest',
+    mapbox=dict(
+        accesstoken=mapbox_access_token,
+        bearing=0,
+        center=dict(
+            lat=52.1064958,
+            lon=5.101
+        ),
+        pitch=0,
+        zoom=14.5
+    ),
+)
 
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 
@@ -150,12 +173,12 @@ if __name__ == '__main__':
                        'backgroundColor': colors['MainBackground']}),
 
             html.Div([
+                dcc.Graph(figure=fig),
                 html.Div('Berekenen waterschade...',
                          id='output_div',
                          style={'color': 'white',
                                 'fontSize': 30,
-                                'text-align': 'center'}),
-                dcc.Graph(figure=fig)
+                                'text-align': 'center'})
             ], style={'marginBottom': 25,
                       'marginTop': 0,
                       'display': 'flex',
