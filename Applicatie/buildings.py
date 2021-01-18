@@ -1,13 +1,13 @@
 import shapefile
 
 
-def create_data(file, days, month, scenario, values):
+def create_data(file, scenario, values):
     print(file)
     # Shapefile reader is used to read .shp files so it can be used
     shpfile = shapefile.Reader(file)
     # get_attributes requires the shp file and the names of the attributes you want
     attributes = get_attributes(values, shpfile)
-    buildings = create_buildings(attributes, days, month, scenario)
+    buildings = create_buildings(attributes, scenario)
 
     return buildings
 
@@ -55,13 +55,13 @@ def get_type(subtype):
     return type
 
 
-def create_buildings(data, days, month, scenario):
+def create_buildings(data, scenario):
     buidlings = []
     for x in data:
         """ this line is slightly hardcoded because the attributes (data)
             needs to be set in the correct order in the class.
             if you want to edit the attributes or change the order somewhere this line needs to be updated as well """
-        building = Building(data[0], data[1], data[2], scenario, days, month)
+        building = Building(data[0], data[1], data[2], scenario)
         buidlings.append(building)
 
     return buidlings
@@ -69,13 +69,11 @@ def create_buildings(data, days, month, scenario):
 
 class Building:
 
-    def __init__(self, subtype, area, inundepth, scenario, days, month):
+    def __init__(self, subtype, area, inundepth, scenario):
         self.subtype = subtype
         self.area = area
         self.inundepth = inundepth
         self.scenario = scenario
-        self.days = days
-        self.month = month
 
         self.type = get_type(self.subtype)
 

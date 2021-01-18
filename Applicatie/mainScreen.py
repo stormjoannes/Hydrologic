@@ -69,36 +69,36 @@ if __name__ == '__main__':
                     multiple=True
                 ),
 
-                html.Label('Hoelang duurt de reparatie (in dagen). Max 20 dagen',
-                           style={'marginLeft': 22.5}),
-                    dcc.Input(
-                        value='dagen',
-                        id='reparatieDagen',
-                        type='number',
-                        style={'marginLeft': 22,
-                               'width':'20%'}),
-
-                html.Label('In welke maand vindt de reparatie plaats',
-                           style={'marginLeft': 22.5}),
-                    dcc.Dropdown(
-                        options=[
-                            {'label': 'Januari', 'value': '1'},
-                            {'label': 'Februari', 'value': '2'},
-                            {'label': 'Maart', 'value': '3'},
-                            {'label': 'April', 'value': '4'},
-                            {'label': 'Mei', 'value': '5'},
-                            {'label': 'Juni', 'value': '6'},
-                            {'label': 'Juli', 'value': '7'},
-                            {'label': 'Augustus', 'value': '8'},
-                            {'label': 'September', 'value': '9'},
-                            {'label': 'Oktober', 'value': '10'},
-                            {'label': 'November', 'value': '11'},
-                            {'label': 'December', 'value': '12'},
-                        ],
-                        value='maand',
-                        id='reparatieMaanden',
-                        style={'marginLeft': 11,
-                               'width':'50%'}),
+                # html.Label('Hoelang duurt de reparatie (in dagen). Max 20 dagen',
+                #            style={'marginLeft': 22.5}),
+                #     dcc.Input(
+                #         value='dagen',
+                #         id='reparatieDagen',
+                #         type='number',
+                #         style={'marginLeft': 22,
+                #                'width':'20%'}),
+                #
+                # html.Label('In welke maand vindt de reparatie plaats',
+                #            style={'marginLeft': 22.5}),
+                #     dcc.Dropdown(
+                #         options=[
+                #             {'label': 'Januari', 'value': '1'},
+                #             {'label': 'Februari', 'value': '2'},
+                #             {'label': 'Maart', 'value': '3'},
+                #             {'label': 'April', 'value': '4'},
+                #             {'label': 'Mei', 'value': '5'},
+                #             {'label': 'Juni', 'value': '6'},
+                #             {'label': 'Juli', 'value': '7'},
+                #             {'label': 'Augustus', 'value': '8'},
+                #             {'label': 'September', 'value': '9'},
+                #             {'label': 'Oktober', 'value': '10'},
+                #             {'label': 'November', 'value': '11'},
+                #             {'label': 'December', 'value': '12'},
+                #         ],
+                #         value='maand',
+                #         id='reparatieMaanden',
+                #         style={'marginLeft': 11,
+                #                'width':'50%'}),
 
                 html.Label('Scenario',
                            style={'marginLeft': 22.5}),
@@ -154,18 +154,12 @@ if __name__ == '__main__':
     @app.callback(Output('output_div', 'children'),
                   Input('submitButton', 'n_clicks'),
                   State('buurtFiles', 'filename'),
-                  State('reparatieDagen', 'value'),
-                  State('reparatieMaanden', 'value'),
                   State('scenario', 'value'))
 
-    def update_output(clicks, gekozen_buurtFiles, reparatieDagen, reparatieMaanden, scenario):
-        antwoorden = [gekozen_buurtFiles, reparatieDagen, reparatieMaanden, scenario]
+    def update_output(clicks, gekozen_buurtFiles, scenario):
+        antwoorden = [gekozen_buurtFiles, scenario]
         if 'Initial Value' not in antwoorden and None not in antwoorden:
-            if 0 < reparatieDagen < 20:
-                return create_data(gekozen_buurtFiles, reparatieDagen, reparatieMaanden, scenario, ['gebruiksdo', 'oppervlakt', 'MAX'])
-            else:
-                return 'Vul een minimum van 0 dagen en een maximum van 20 dagen in'
-
+            return create_data(gekozen_buurtFiles, scenario, ['gebruiksdo', 'oppervlakt', 'MAX'])
         else:
             return 'Vul de nodige gegevens in'
 
