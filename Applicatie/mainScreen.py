@@ -4,6 +4,13 @@ import dash_html_components as html
 from dash.dependencies import Output, State, Input
 from calculator import main
 from buildings import create_data
+import plotly.graph_objects as go
+import plotly.express as px
+
+px.set_mapbox_access_token("pk.eyJ1IjoiY2hhcmxpZWNob2YiLCJhIjoiY2trMmozbzJwMGp1NDJwcW94dHAzdmYxZSJ9.PWhcvXLn2xNSZV_gkKpXbw")
+df = px.data.carshare()
+fig = px.scatter_mapbox(df, lat="centroid_lat", lon="centroid_lon",     color="peak_hour", size="car_hours",
+                  color_continuous_scale=px.colors.cyclical.IceFire, size_max=15, zoom=10)
 
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 
@@ -68,6 +75,17 @@ if __name__ == '__main__':
                     # Allow multiple files to be uploaded
                     multiple=True
                 ),
+                html.Label('Prijs',
+                           style={'marginLeft': 22.5}),
+                dcc.Dropdown(
+                    options=[
+                        {'label': 'Boven', 'value': 'boven'},
+                        {'label': 'Onder', 'value': 'onder'},
+                    ],
+                    value='prijs',
+                    id='reparatieMaanden',
+                    style={'marginLeft': 11,
+                           'width':'50%'}),
 
                 # html.Label('Hoelang duurt de reparatie (in dagen). Max 20 dagen',
                 #            style={'marginLeft': 22.5}),
@@ -136,12 +154,14 @@ if __name__ == '__main__':
                          id='output_div',
                          style={'color': 'white',
                                 'fontSize': 30,
-                                'text-align': 'center'})
+                                'text-align': 'center'}),
+                dcc.Graph(figure=fig)
             ], style={'marginBottom': 25,
                       'marginTop': 0,
                       'display': 'flex',
                       'backgroundColor': 'MainBackground'}
             ),
+
 
         ], style={'marginBottom': 25,
                   'marginLeft': 75,
