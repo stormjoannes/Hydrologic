@@ -6,6 +6,7 @@ from buildings import create_data
 import plotly.graph_objects as go
 
 mapbox_access_token = "pk.eyJ1IjoiY2hhcmxpZWNob2YiLCJhIjoiY2trMmozbzJwMGp1NDJwcW94dHAzdmYxZSJ9.PWhcvXLn2xNSZV_gkKpXbw"
+#Invoeren alle latitudes en longtitudes met bijbehorende gegevens
 fig = go.Figure(go.Scattermapbox(
         lat=['52.1044958',
              '52.1047415'],
@@ -18,6 +19,7 @@ fig = go.Figure(go.Scattermapbox(
               "overkant"],
     ))
 
+#Instellingen voor de map en het begin pointview
 fig.update_layout(
     autosize=True,
     hovermode='closest',
@@ -33,20 +35,24 @@ fig.update_layout(
     ),
 )
 
+#Import concents
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 
 app = dash.Dash(__name__, external_stylesheets=external_stylesheets)
+#Tab titel
 app.title = 'Waterschade Voorspeller'
 
+#Alle gebruikte kleuren definiëren
 colors = {
     'MainBackground': '#60A3D9',
     'HeaderBackground': '#0074B7',
     'SubmitButtonBackground': '#BFD7ED'
 }
 
+#Main div maken
 if __name__ == '__main__':
     app.layout = html.Div([
-
+        #Koptitel aanmaken
         html.Div([
             html.Div('Waterschade Voorspeller',
                      style={'color': 'white',
@@ -56,22 +62,10 @@ if __name__ == '__main__':
                   'marginTop': 0,
                   'backgroundColor': colors['HeaderBackground']}),
 
+        #Div voor input en output naast elkaar
         html.Div([
+            #Linker div voor alle inputs
             html.Div([
-
-                # html.Label('Buurt',
-                #            style={'marginLeft': 22.5}),
-                # dcc.Dropdown(
-                #     options=[
-                #         {'label': 'Ondiep', 'value': 'Ondiep'},
-                #         {'label': 'Witte Vrouwen', 'value': 'Witte Vrouwen'},
-                #         {'label': 'Ondiep', 'value': '3'},
-                #     ],
-                #     value='Initial Value',
-                #     id='gekozenBuurt',
-                #     style={'marginLeft': 11,
-                #            'width': '50%'}),
-
                 html.Label('Kies de benodigde files van de buurt',
                            style={'marginLeft': 22.5}),
                 dcc.Upload(
@@ -106,38 +100,8 @@ if __name__ == '__main__':
                     value='prijs',
                     id='reparatieMaanden',
                     style={'marginLeft': 11,
+                           'marginBottom': 11,
                            'width':'50%'}),
-
-                # html.Label('Hoelang duurt de reparatie (in dagen). Max 20 dagen',
-                #            style={'marginLeft': 22.5}),
-                #     dcc.Input(
-                #         value='dagen',
-                #         id='reparatieDagen',
-                #         type='number',
-                #         style={'marginLeft': 22,
-                #                'width':'20%'}),
-                #
-                # html.Label('In welke maand vindt de reparatie plaats',
-                #            style={'marginLeft': 22.5}),
-                #     dcc.Dropdown(
-                #         options=[
-                #             {'label': 'Januari', 'value': '1'},
-                #             {'label': 'Februari', 'value': '2'},
-                #             {'label': 'Maart', 'value': '3'},
-                #             {'label': 'April', 'value': '4'},
-                #             {'label': 'Mei', 'value': '5'},
-                #             {'label': 'Juni', 'value': '6'},
-                #             {'label': 'Juli', 'value': '7'},
-                #             {'label': 'Augustus', 'value': '8'},
-                #             {'label': 'September', 'value': '9'},
-                #             {'label': 'Oktober', 'value': '10'},
-                #             {'label': 'November', 'value': '11'},
-                #             {'label': 'December', 'value': '12'},
-                #         ],
-                #         value='maand',
-                #         id='reparatieMaanden',
-                #         style={'marginLeft': 11,
-                #                'width':'50%'}),
 
                 html.Label('Scenario',
                            style={'marginLeft': 22.5}),
@@ -192,6 +156,7 @@ if __name__ == '__main__':
     ], style={'columnCount': 1,
               'backgroundColor': colors['MainBackground']})
 
+    #verkrijgen van de input values
     @app.callback(Output('output_div', 'children'),
                   Input('submitButton', 'n_clicks'),
                   State('buurtFiles', 'filename'),
@@ -199,6 +164,7 @@ if __name__ == '__main__':
 
     def update_output(clicks, gekozen_buurtFiles, scenario):
         antwoorden = [gekozen_buurtFiles, scenario]
+        #zorgen dat alles ingevuld is voordat je op submit kan drukken en resultaten krijgt
         if 'Initial Value' not in antwoorden and None not in antwoorden:
             return create_data(gekozen_buurtFiles, scenario, ['gebruiksdo', 'oppervlakt', 'MAX'])
         else:
