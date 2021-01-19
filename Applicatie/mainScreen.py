@@ -147,7 +147,6 @@ if __name__ == '__main__':
                       'backgroundColor': 'MainBackground'}
             ),
 
-
         ], style={'marginBottom': 25,
                   'marginLeft': 75,
                   'display': 'flex',
