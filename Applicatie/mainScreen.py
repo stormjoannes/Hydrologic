@@ -2,10 +2,8 @@ import dash
 import dash_core_components as dcc
 import dash_html_components as html
 from dash.dependencies import Output, State, Input
-from calculator import main
 from buildings import create_data
 import plotly.graph_objects as go
-import plotly.express as px
 
 mapbox_access_token = "pk.eyJ1IjoiY2hhcmxpZWNob2YiLCJhIjoiY2trMmozbzJwMGp1NDJwcW94dHAzdmYxZSJ9.PWhcvXLn2xNSZV_gkKpXbw"
 fig = go.Figure(go.Scattermapbox(
