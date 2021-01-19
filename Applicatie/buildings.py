@@ -1,10 +1,10 @@
 import shapefile
+from create_directory import *
 
 
-def create_data(file, scenario, values):
-    print(file)
+def create_data(files, scenario, values):
     # Shapefile reader is used to read .shp files so it can be used
-    shpfile = shapefile.Reader(file)
+    shpfile = shapefile.Reader(files)
     # get_attributes requires the shp file and the names of the attributes you want
     attributes = get_attributes(values, shpfile)
     buildings = create_buildings(attributes, scenario)
@@ -30,29 +30,11 @@ def get_attributes(attributes, file):
     return all_attr
 
 
-def get_type(subtype):
-    # use all types and subtypes the calculator can use
-    bebouwing = ['onderwijsfunctie', 'industriefunctie', 'winkelfunctie', 'kantoorfunctie', 'logistiekfunctie',
-                 'woonfunctie', 'bijeenkomstfunctie', 'celfunctie', 'sportfunctie', 'overige gebruiksfunctie']
-    infrastructure = ['spoor', 'primair', 'secundair', 'tertair', 'overige gebruiksfunctie']
-    landbouw = ['gras', 'granen', 'mais', 'aardappelen', 'overige gebruiksfunctie', 'fruitteelt', 'bloembollen', 'hoogstam', 'greenhouse']
-    natuur = ['sportparken', 'terreinen', 'begraafplaatsen', 'volkstuinen', 'recreatie', 'groen', 'overige gebruiksfunctie']
-
-    type = ""
-
-    # return type based on subtype
-    if subtype in bebouwing:
-        type = 'bebouwing'
-    elif subtype in infrastructure:
-        type = 'infrastructure'
-    elif subtype in landbouw:
-        type = 'landbouw'
-    elif subtype in natuur:
-        type = 'natuur'
-    else:
-        type = 'unknown'
-
-    return type
+def change_subtype(subtype):
+    # As far as we know all subtypes end with "functie" so we simple remove this so that it is compatible with the calculator
+    if "functie" in subtype:
+        new_sub = subtype.replace('functie', '')
+        return new_sub.upper()
 
 
 def create_buildings(data, scenario):
@@ -61,7 +43,7 @@ def create_buildings(data, scenario):
         """ this line is slightly hardcoded because the attributes (data)
             needs to be set in the correct order in the class.
             if you want to edit the attributes or change the order somewhere this line needs to be updated as well """
-        building = Building(data[0], data[1], data[2], scenario)
+        building = Building(x[0], x[1], x[2], scenario)
         buidlings.append(building)
 
     return buidlings
@@ -70,26 +52,24 @@ def create_buildings(data, scenario):
 class Building:
 
     def __init__(self, subtype, area, inundepth, scenario):
-        self.subtype = subtype
+        self.subtype = change_subtype(subtype)
         self.area = area
         self.inundepth = inundepth
         self.scenario = scenario
 
-        self.type = get_type(self.subtype)
-
 
 # dit is een test path dit wordt later vervangen met het bestand wat van de applicatie komt
-# data = create_data('../../Ondiep/pandPolygon_Area075.shp', 7, 10, 'hoog', ['gebruiksdo', 'oppervlakt', 'MAX'])
-# print(data)
+data = create_data('../../Ondiep/pandPolygon_Area075.shp', 'hoog', ['gebruiksdo', 'oppervlakt', 'MAX'])
+print(data)
 # # code om tif bestand om te zetten in een numpy array
 # img = Image.open('../Ondiep/resultaten/waterOpStraat.tif')
 # imnp = np.array(img)
 #
 #
 #
-# # fields zijn attributes van het object (het object is in deze context een gebouw dat onderwater kan staan)
+# fields zijn attributes van het object (het object is in deze context een gebouw dat onderwater kan staan)
 
-#
+
 # # records is een lijst van alle objects (alle gebouwen dus)
 # records = shpfile.records()
 #
