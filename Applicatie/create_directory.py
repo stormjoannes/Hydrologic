@@ -10,11 +10,9 @@ def create_directory(files):
 
     add_files(files, new_directory)
 
-    return new_directory
-
 
 def add_files(files, end_location):
     for x in files:
-        print(x)
-        print(end_location + x)
-        # os.rename(x, end_location + x)
+        print(open(x, 'r'))
+        print(end_location + "\\" + x)
+        shutil.move(x, end_location + "\\" + x)
