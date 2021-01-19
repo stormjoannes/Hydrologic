@@ -3,7 +3,7 @@ from create_directory import create_directory
 
 
 def create_data(files, scenario, values):
-    create_directory(files)
+    # create_directory(files)
     # Shapefile reader is used to read .shp files so it can be used
     shpfile = shapefile.Reader(files)
     # get_attributes requires the shp file and the names of the attributes you want
@@ -47,6 +47,10 @@ def create_buildings(data, scenario):
         building = Building(x[0], x[1], x[2], scenario)
         buidlings.append(building)
 
+        print("subtype", building.subtype)
+        print("opp", building.area)
+        print("inundepth", building.inundepth)
+
     return buidlings
 
 
@@ -60,8 +64,8 @@ class Building:
 
 
 # # dit is een test path dit wordt later vervangen met het bestand wat van de applicatie komt
-# data = create_data('../../Ondiep/pandPolygon_Area075.shp', 'hoog', ['gebruiksdo', 'oppervlakt', 'MAX'])
-# print(data)
+data = create_data('../../Ondiep/pandPolygon_Area075.shp', 'hoog', ['gebruiksdo', 'oppervlakt', 'MAX'])
+print(data)
 # # code om tif bestand om te zetten in een numpy array
 # img = Image.open('../Ondiep/resultaten/waterOpStraat.tif')
 # imnp = np.array(img)
