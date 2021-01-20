@@ -6,38 +6,34 @@ from dash.dependencies import Output, State, Input
 from buildings import create_data
 import plotly.graph_objects as go
 
-mapbox_access_token = "pk.eyJ1IjoiY2hhcmxpZWNob2YiLCJhIjoiY2trMmozbzJwMGp1NDJwcW94dHAzdmYxZSJ9.PWhcvXLn2xNSZV_gkKpXbw"
-#Invoeren alle latitudes en longtitudes met bijbehorende gegevens
-fig = go.Figure(go.Scattermapbox(
-        lat=['52.1044958',
-             '52.1047415',
-             '52.107'],
-        lon=['5.0986251',
-             '5.0984616',
-             '5.1000'],
-        mode='markers',
-        marker=go.scattermapbox.Marker(
-        ),
-        text=["Thijmes huis",
-              "overkant",
-              'handel'],
-    ))
+def makeMap(latitudes, longtitudes, calculations):
+    mapbox_access_token = "pk.eyJ1IjoiY2hhcmxpZWNob2YiLCJhIjoiY2trMmozbzJwMGp1NDJwcW94dHAzdmYxZSJ9.PWhcvXLn2xNSZV_gkKpXbw"
+    #Invoeren alle latitudes en longtitudes met bijbehorende gegevens
+    fig = go.Figure(go.Scattermapbox(
+            lat=latitudes,
+            lon=longtitudes,
+            mode='markers',
+            marker=go.scattermapbox.Marker(
+            ),
+            text=calculations,
+        ))
 
-#Instellingen voor de map en het begin pointview
-fig.update_layout(
-    autosize=True,
-    hovermode='closest',
-    mapbox=dict(
-        accesstoken=mapbox_access_token,
-        bearing=0,
-        center=dict(
-            lat=52.1064958,
-            lon=5.101
+    #Instellingen voor de map en het begin pointview
+    fig.update_layout(
+        autosize=True,
+        hovermode='closest',
+        mapbox=dict(
+            accesstoken=mapbox_access_token,
+            bearing=0,
+            center=dict(
+                lat=52.1064958,
+                lon=5.101
+            ),
+            pitch=0,
+            zoom=14.5
         ),
-        pitch=0,
-        zoom=14.5
-    ),
-)
+    )
+    return fig
 
 #Import concents
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
@@ -102,9 +98,9 @@ if __name__ == '__main__':
                            style={'marginLeft': 22.5}),
                 dcc.RadioItems(
                     options=[
-                        {'label': 'Laag', 'value': 'Laag'},
-                        {'label': 'Gemiddeld', 'value': 'Gemiddelde'},
-                        {'label': 'Hoog', 'value': 'Hoog'}
+                        {'label': 'Laag', 'value': 'LOW'},
+                        {'label': 'Gemiddeld', 'value': 'MEDIUM'},
+                        {'label': 'Hoog', 'value': 'HIGH'}
                     ],
                     value='Initial Value',
                     id='scenario',
@@ -130,7 +126,7 @@ if __name__ == '__main__':
                        'backgroundColor': colors['MainBackground']}),
 
             html.Div([
-                dcc.Graph(figure=fig),
+                # dcc.Graph(figure=fig, style={'display':'None'}),
                 html.Div('Berekenen waterschade...',
                          id='output_div',
                          style={'color': 'white',
@@ -160,7 +156,20 @@ if __name__ == '__main__':
         antwoorden = [gekozen_buurt, scenario]
         #zorgen dat alles ingevuld is voordat je op submit kan drukken en resultaten krijgt
         if 'Initial Value' not in antwoorden and None not in antwoorden:
-            return create_data(gekozen_buurt, scenario, ['gebruiksdo', 'oppervlakt', 'MAX'])
+            data = create_data(gekozen_buurt, scenario, ['gebruiksdo', 'oppervlakt', 'MAX', 'LAT', 'LNG'])
+            latitudes = []
+            longtitudes = []
+            calculations = []
+            for i in data:
+                latitudes.append(i.lat)
+                longtitudes.append(i.lng)
+                calculations.append(i.waterschatting)
+            print(latitudes)
+
+            return dcc.Graph(figure=makeMap(latitudes, longtitudes, calculations),
+                             style={'height':'100%',
+                                    'width':'100%',
+                                    'color': colors['MainBackground']})
         else:
             return 'Vul de nodige gegevens in'
 
