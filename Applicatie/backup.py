@@ -10,14 +10,17 @@ mapbox_access_token = "pk.eyJ1IjoiY2hhcmxpZWNob2YiLCJhIjoiY2trMmozbzJwMGp1NDJwcW
 #Invoeren alle latitudes en longtitudes met bijbehorende gegevens
 fig = go.Figure(go.Scattermapbox(
         lat=['52.1044958',
-             '52.1047415'],
+             '52.1047415',
+             '52.107'],
         lon=['5.0986251',
-             '5.0984616'],
+             '5.0984616',
+             '5.1000'],
         mode='markers',
         marker=go.scattermapbox.Marker(
         ),
         text=["Thijmes huis",
-              "overkant"],
+              "overkant",
+              'handel'],
     ))
 
 #Instellingen voor de map en het begin pointview

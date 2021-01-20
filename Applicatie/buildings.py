@@ -5,7 +5,8 @@ from calculator.main import Calc
 
 def create_data(nbh, scenario, values):
     # get the pandPolygon for the correct neighbourhood
-    path = get_neighbourhood_path(nbh)
+    # next to nbh enter the path where you keep all neighbourhoods
+    path = get_neighbourhood_path(nbh, r'C:\Users\brand\hbo\jaar_2\BS\hydro\Buurten')
     # use it in the shapefile reader
     shpfile = shapefile.Reader(path)
     # get_attributes requires the shp file and the names of the attributes you want
@@ -15,12 +16,11 @@ def create_data(nbh, scenario, values):
     return buildings
 
 
-def get_neighbourhood_path(nbh):
-    neighbourhoods = os.listdir('../Buurten')
-    current_path = "../Buurten"
+def get_neighbourhood_path(nbh, path):
+    neighbourhoods = os.listdir(path)
     for neighbourhood in neighbourhoods:
         if neighbourhood == nbh:
-            nbh_path = os.path.join(current_path, nbh, 'pandPolygon_Area075.shp')
+            nbh_path = os.path.join(path, nbh, 'pandPolygon_Area075.shp')
             return nbh_path
 
 
