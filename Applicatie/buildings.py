@@ -6,7 +6,7 @@ from calculator.main import Calc
 def create_data(nbh, scenario, values):
     # get the pandPolygon for the correct neighbourhood
     # next to nbh enter the path where you keep all neighbourhoods
-    path = get_neighbourhood_path(nbh, r'C:\Users\brand\hbo\jaar_2\BS\hydro\Buurten')
+    path = get_neighbourhood_path(nbh, r'C:\tools\transfer_782052_files_3c3b1f65\Hydrologic_Package_2020-12-09\Hydrologic_Package_2020-12-09\Afstroomanalyse\Buurten')
     # use it in the shapefile reader
     shpfile = shapefile.Reader(path)
     # get_attributes requires the shp file and the names of the attributes you want
@@ -87,27 +87,27 @@ def create_buildings(data, scenario):
             """ this line is slightly hardcoded because the attributes (data)
                 needs to be set in the correct order in the class.
                 if you want to edit the attributes or change the order somewhere this line needs to be updated as well """
-            building = Building(x[0], x[1], x[2], scenario, x[3], x[4])
+            building = Building(x[0], x[1], x[2], scenario, x[4], x[3])
             buidlings.append(building)
 
-            print("subtype", building.subtype)
-            print("opp", building.area)
-            print("inundepth", building.inundepth)
-            print("scen", building.scenario)
-            print('waterschade', building.waterschatting)
+            # print("subtype", building.subtype)
+            # print("opp", building.area)
+            # print("inundepth", building.inundepth)
+            # print("scen", building.scenario)
+            # print('waterschade', building.waterschatting)
 
     return buidlings
 
 
 class Building:
 
-    def __init__(self, subtype, area, inundepth, scenario, lat, long):
+    def __init__(self, subtype, area, inundepth, scenario, lat, lng):
         self.subtype = change_subtype(subtype)
         self.area = area
         self.inundepth = inundepth
         self.scenario = scenario
         self.lat = lat
-        self.long = long
+        self.lng = lng
 
         calculator = Calc(self.area, 'BEBOUWING',  self.subtype, self.scenario, self.inundepth)
         self.waterschatting = calculator.calc()
