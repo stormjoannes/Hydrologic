@@ -1,3 +1,4 @@
+import datetime
 import dash
 import dash_core_components as dcc
 import dash_html_components as html
@@ -68,28 +69,30 @@ if __name__ == '__main__':
             html.Div([
                 html.Label('Kies de benodigde files van de buurt',
                            style={'marginLeft': 22.5}),
-                dcc.Upload(
-                    id='buurtFiles',
-                    children=html.Div([
-                        'Drag and Drop or ',
-                        html.A('Select Files',
-                               style={'color': 'white'})
-                    ]),
-                    style={'width': '60%',
-                           'padding': 3,
-                           'verticalAlign': 'middle',
-                           'marginLeft': 22,
-                           'marginBottom': 10,
-                           'lineHeight': '60px',
-                           'borderWidth': '1px',
-                           'borderStyle': 'dashed',
-                           'borderRadius': '5px',
-                           'textAlign': 'center',
-                           'background': colors['SubmitButtonBackground']
-                           },
-                    # Allow multiple files to be uploaded
-                    multiple=True
-                ),
+                html.Div([
+                    dcc.Upload(
+                        id='upload-image',
+                        children=html.Div([
+                            'Drag and Drop or ',
+                            html.A('Select Files')
+                        ]),
+                        style={'width': '60%',
+                               'padding': 3,
+                               'verticalAlign': 'middle',
+                               'marginLeft': 22,
+                               'marginBottom': 10,
+                               'lineHeight': '60px',
+                               'borderWidth': '1px',
+                               'borderStyle': 'dashed',
+                               'borderRadius': '5px',
+                               'textAlign': 'center',
+                               'background': colors['SubmitButtonBackground']
+                        },
+                        # Allow multiple files to be uploaded
+                        multiple=True
+                    ),
+                    html.Div(id='output-image-upload'),
+                ]),
                 html.Label('Prijs',
                            style={'marginLeft': 22.5}),
                 dcc.Dropdown(
@@ -135,7 +138,7 @@ if __name__ == '__main__':
                        'backgroundColor': colors['MainBackground']}),
 
             html.Div([
-                dcc.Graph(figure=fig),
+                # dcc.Graph(figure=fig),
                 html.Div('Berekenen waterschade...',
                          id='output_div',
                          style={'color': 'white',
@@ -155,17 +158,46 @@ if __name__ == '__main__':
     ], style={'columnCount': 1,
               'backgroundColor': colors['MainBackground']})
 
+
+    def parse_contents(contents, filename, date):
+        return html.Div([
+            html.H5(filename),
+            html.H6(datetime.datetime.fromtimestamp(date)),
+
+            # HTML images accept base64 encoded strings in the same format
+            # that is supplied by the upload
+            html.Img(src=contents),
+            html.Hr(),
+            html.Div('Raw Content'),
+            html.Pre(contents[0:200] + '...', style={
+                'whiteSpace': 'pre-wrap',
+                'wordBreak': 'break-all'
+            })
+        ])
+
+
+    @app.callback(Output('output-image-upload', 'children'),
+                  Input('upload-image', 'contents'),
+                  State('upload-image', 'filename'),
+                  State('upload-image', 'last_modified'))
+    def update_output(list_of_contents, list_of_names, list_of_dates):
+        if list_of_contents is not None:
+            children = [
+                parse_contents(c, n, d) for c, n, d in
+                zip(list_of_contents, list_of_names, list_of_dates)]
+            return children
+
     #verkrijgen van de input values
     @app.callback(Output('output_div', 'children'),
                   Input('submitButton', 'n_clicks'),
-                  State('buurtFiles', 'filename'),
+                  State('upload-image', 'filename'),
                   State('scenario', 'value'))
 
-    def update_output(clicks, gekozen_buurtFiles, scenario):
-        antwoorden = [gekozen_buurtFiles, scenario]
+    def update_output(clicks, uploadimage, scenario):
+        antwoorden = [uploadimage, scenario]
         #zorgen dat alles ingevuld is voordat je op submit kan drukken en resultaten krijgt
         if 'Initial Value' not in antwoorden and None not in antwoorden:
-            return create_data(gekozen_buurtFiles, scenario, ['gebruiksdo', 'oppervlakt', 'MAX'])
+            return create_data(uploadimage, scenario, ['gebruiksdo', 'oppervlakt', 'MAX'])
         else:
             return 'Vul de nodige gegevens in'
 
