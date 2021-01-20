@@ -98,18 +98,19 @@ def create_buildings(data, scenario):
 
 class Building:
 
-    def __init__(self, subtype, area, inundepth, scenario):
+    def __init__(self, subtype, area, inundepth, scenario, lat, long):
         self.subtype = change_subtype(subtype)
         self.area = area
         self.inundepth = inundepth
         self.scenario = scenario
+        self.lat = lat
+        self.long = long
 
         calculator = Calc(self.area, 'BEBOUWING',  self.subtype, self.scenario, self.inundepth)
         self.waterschatting = calculator.calc()
 
-
-create_data('Ondiep', 'HIGH', ['gebruiksdo', 'oppervlakt', 'MAX'])
-
+#
+# data = create_data('Ondiep', 'HIGH', ['gebruiksdo', 'oppervlakt', 'MAX'])
 # # dit is een test path dit wordt later vervangen met het bestand wat van de applicatie komt
 # data = create_data('../../Ondiep/pandPolygon_Area075.shp', 'hoog', ['gebruiksdo', 'oppervlakt', 'MAX'])
 # print(data)
