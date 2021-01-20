@@ -64,8 +64,8 @@ class Building:
 
 
 # # dit is een test path dit wordt later vervangen met het bestand wat van de applicatie komt
-data = create_data('../../Ondiep/pandPolygon_Area075.shp', 'hoog', ['gebruiksdo', 'oppervlakt', 'MAX'])
-print(data)
+# data = create_data('../../Ondiep/pandPolygon_Area075.shp', 'hoog', ['gebruiksdo', 'oppervlakt', 'MAX'])
+# print(data)
 # # code om tif bestand om te zetten in een numpy array
 # img = Image.open('../Ondiep/resultaten/waterOpStraat.tif')
 # imnp = np.array(img)
