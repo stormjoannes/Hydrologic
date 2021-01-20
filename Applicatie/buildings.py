@@ -43,6 +43,8 @@ def get_attributes(attributes, file):
 
 
 def change_subtype(subtype):
+    # turn string to lowercase
+    subtype = subtype.lower()
     # remove spaces in string
     subtype = subtype.replace(' ', '')
     # some subtype values contain more than 1 subtype. We turn these strings into lists
@@ -52,8 +54,8 @@ def change_subtype(subtype):
         for x in range(0, len(subtype_list)):
             if "functie" in subtype_list[x]:
                 subtype_list[x] = subtype_list[x].replace('functie', '')
-                if "gebruiks" in subtype_list[x]:
-                    subtype_list[x] = subtype_list[x].replace('gebruiks', '')
+            if "gebruiks" in subtype_list[x]:
+                subtype_list[x] = subtype_list[x].replace('gebruiks', '')
 
         return [x.upper() for x in subtype_list]
 
@@ -61,11 +63,10 @@ def change_subtype(subtype):
         # As far as we know all subtypes end with "functie" or "gebruiks" so we simple remove this so that it is compatible with the calculator
         if "functie" in subtype:
             subtype = subtype.replace('functie', '')
-            if "gebruiks" in subtype:
-                subtype = subtype.replace('gebruiks', '')
-                return subtype.upper()
-            else:
-                return subtype.upper()
+        if "gebruiks" in subtype:
+            subtype = subtype.replace('gebruiks', '')
+        return subtype.upper()
+
 
 
 def is_none(building):
