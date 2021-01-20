@@ -68,20 +68,30 @@ def change_subtype(subtype):
                 return subtype.upper()
 
 
+def is_none(building):
+    if building[0] == "":
+        return True
+    elif building[1] == 0.0:
+        return True
+    else:
+        return False
+
+
 def create_buildings(data, scenario):
     buidlings = []
     for x in data:
         """ this line is slightly hardcoded because the attributes (data)
             needs to be set in the correct order in the class.
             if you want to edit the attributes or change the order somewhere this line needs to be updated as well """
-        building = Building(x[0], x[1], x[2], scenario)
-        buidlings.append(building)
+        if not is_none(x):
+            building = Building(x[0], x[1], x[2], scenario)
+            buidlings.append(building)
 
-        print("subtype", building.subtype)
-        print("opp", building.area)
-        print("inundepth", building.inundepth)
-        print("scen", building.scenario)
-        print('waterschade', building.waterschatting)
+            print("subtype", building.subtype)
+            print("opp", building.area)
+            print("inundepth", building.inundepth)
+            print("scen", building.scenario)
+            print('waterschade', building.waterschatting)
 
     return buidlings
 
