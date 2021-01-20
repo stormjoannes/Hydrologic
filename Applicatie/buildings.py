@@ -1,11 +1,14 @@
 import shapefile
+import io
 from create_directory import create_directory
 
 
 def create_data(files, scenario, values):
+    # print(files)
     # create_directory(files)
     # Shapefile reader is used to read .shp files so it can be used
-    shpfile = shapefile.Reader(files)
+    shpfile = shapefile.Reader(io.BytesIO(files))
+    print(shpfile)
     # get_attributes requires the shp file and the names of the attributes you want
     attributes = get_attributes(values, shpfile)
     buildings = create_buildings(attributes, scenario)

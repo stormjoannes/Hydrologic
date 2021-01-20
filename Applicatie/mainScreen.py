@@ -1,4 +1,4 @@
-import datetime
+import base64
 import dash
 import dash_core_components as dcc
 import dash_html_components as html
@@ -93,18 +93,18 @@ if __name__ == '__main__':
                     ),
                     html.Div(id='output-image-upload'),
                 ]),
-                html.Label('Prijs',
-                           style={'marginLeft': 22.5}),
-                dcc.Dropdown(
-                    options=[
-                        {'label': 'Boven', 'value': 'boven'},
-                        {'label': 'Onder', 'value': 'onder'},
-                    ],
-                    value='prijs',
-                    id='reparatieMaanden',
-                    style={'marginLeft': 11,
-                           'marginBottom': 11,
-                           'width':'50%'}),
+                # html.Label('Prijs',
+                #            style={'marginLeft': 22.5}),
+                # dcc.Dropdown(
+                #     options=[
+                #         {'label': 'Boven', 'value': 'boven'},
+                #         {'label': 'Onder', 'value': 'onder'},
+                #     ],
+                #     value='prijs',
+                #     id='reparatieMaanden',
+                #     style={'marginLeft': 11,
+                #            'marginBottom': 11,
+                #            'width':'50%'}),
 
                 html.Label('Scenario',
                            style={'marginLeft': 22.5}),
@@ -158,45 +158,44 @@ if __name__ == '__main__':
     ], style={'columnCount': 1,
               'backgroundColor': colors['MainBackground']})
 
-    def parse_contents(contents, filename, date):
+    def parse_contents(contents, filename):
         return html.Div([
             html.H5(filename),
-            html.H6(datetime.datetime.fromtimestamp(date)),
 
             # HTML images accept base64 encoded strings in the same format
             # that is supplied by the upload
-            html.Img(src=contents),
-            html.Hr(),
-            html.Div('Raw Content'),
-            html.Pre(contents[0:200] + '...', style={
-                'whiteSpace': 'pre-wrap',
-                'wordBreak': 'break-all'
-            })
-        ])
-
+            html.Img(src=contents)],
+            style= {'marginLeft':22}
+        )
 
     @app.callback(Output('output-image-upload', 'children'),
                   Input('upload-image', 'contents'),
-                  State('upload-image', 'filename'),
-                  State('upload-image', 'last_modified'))
-    def update_output(list_of_contents, list_of_names, list_of_dates):
+                  State('upload-image', 'filename'))
+
+    def update_output(list_of_contents, list_of_names):
         if list_of_contents is not None:
             children = [
-                parse_contents(c, n, d) for c, n, d in
-                zip(list_of_contents, list_of_names, list_of_dates)]
+                parse_contents(c, n) for c, n in
+                zip(list_of_contents, list_of_names)]
             return children
 
     #verkrijgen van de input values
     @app.callback(Output('output_div', 'children'),
                   Input('submitButton', 'n_clicks'),
-                  State('upload-image', 'filename'),
+                  State('upload-image', 'contents'),
                   State('scenario', 'value'))
 
     def update_output(clicks, uploadimage, scenario):
         antwoorden = [uploadimage, scenario]
         #zorgen dat alles ingevuld is voordat je op submit kan drukken en resultaten krijgt
+        if uploadimage != 'None':
+            print(uploadimage)
+            content_type, content_string = uploadimage[0].split(',')
+
+            decoded = base64.b64decode(content_string)
+
         if 'Initial Value' not in antwoorden and None not in antwoorden:
-            return create_data(uploadimage, scenario, ['gebruiksdo', 'oppervlakt', 'MAX'])
+            return create_data(decoded, scenario, ['gebruiksdo', 'oppervlakt', 'MAX'])
         else:
             return 'Vul de nodige gegevens in'
 
