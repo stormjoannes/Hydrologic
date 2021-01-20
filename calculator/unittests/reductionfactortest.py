@@ -20,32 +20,32 @@ class reductionfactortest(unittest.TestCase):
 
     def test_inundationfactorzero(self):
         """Tests a case in which the inundation reduction factor should be 0."""
-        calc = Calc(area=100, type="BEBOUWING",subtype="ONDERWIJS",usage="HIGH",scenario="HIGH",inundepth=-0.01, days=5, month=3)  # Inundationdepth(-0.01) == Factor(0)
+        calc = Calc(area=100, type="BEBOUWING",subtype="ONDERWIJS",scenario="HIGH",inundepth=-0.01)  # Inundationdepth(-0.01) == Factor(0)
         factor = calc.inunfactor
         self.assertEqual(factor, 0)
 
     def test_inundationfactorhalf(self):
         """Tests a case in which the inundation reduction factor should be 0.5"""
-        calc = Calc(area=100, type="BEBOUWING",subtype="ONDERWIJS",usage="HIGH",scenario="HIGH",inundepth=0.05, days=5, month=3)  # Inundationdepth(0.05) == Factor(0.5)
+        calc = Calc(area=100, type="BEBOUWING",subtype="ONDERWIJS",scenario="HIGH",inundepth=0.05)  # Inundationdepth(0.05) == Factor(0.5)
         factor = calc.inunfactor
         self.assertEqual(factor, 0.5)
 
     def test_inundationfactorfull(self):
         """Tests a case in which the inundation reduction factor should be 1"""
-        calc = Calc(area=100, type="BEBOUWING",subtype="ONDERWIJS",usage="HIGH",scenario="HIGH",inundepth=0.15, days=5, month=3)  # Inundationdepth(0.15) == Factor(1)
+        calc = Calc(area=100, type="BEBOUWING",subtype="ONDERWIJS",scenario="HIGH",inundepth=0.15)  # Inundationdepth(0.15) == Factor(1)
         factor = calc.inunfactor
         self.assertEqual(factor, 1)
 
-    def test_durationfactorconsistency(self):
-        """Tests whether the duration reduction factor is always consistent (is 1 in different cases)"""
-        for i in range(0, 21):
-            calc = Calc(area=100, type="BEBOUWING",subtype="ONDERWIJS",usage="HIGH",scenario="HIGH",inundepth=0.3, days=i, month=3)
-            factor = calc.durfactor
-            self.assertEqual(factor, 1)
-
-    def test_seasonfactorconsistency(self):
-        """Tests whether the duration reduction factor is always consistent (is 1 in different cases)"""
-        for j in range(0,13):
-            calc = Calc(area=100, type="BEBOUWING",subtype="ONDERWIJS",usage="HIGH",scenario="HIGH",inundepth=0.3, days=5, month=j)
-            factor = calc.seasonfactor
-            self.assertEqual(factor, 1)
+    # def test_durationfactorconsistency(self):
+    #     """Tests whether the duration reduction factor is always consistent (is 1 in different cases)"""
+    #     for i in range(0, 21):
+    #         calc = Calc(area=100, type="BEBOUWING",subtype="ONDERWIJS",scenario="HIGH",inundepth=0.3)
+    #         factor = calc.durfactor
+    #         self.assertEqual(factor, 1)
+    #
+    # def test_seasonfactorconsistency(self):
+    #     """Tests whether the duration reduction factor is always consistent (is 1 in different cases)"""
+    #     for j in range(0,13):
+    #         calc = Calc(area=100, type="BEBOUWING",subtype="ONDERWIJS",scenario="HIGH",inundepth=0.3)
+    #         factor = calc.seasonfactor
+    #         self.assertEqual(factor, 1)

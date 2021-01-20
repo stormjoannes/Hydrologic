@@ -85,8 +85,7 @@ class Calc():
     - area (in m^2)
     - type (urban, infrastructure, agriculture, nature)"""
 
-    def __init__(self, area: float, type: str, subtype: str or list, usage: str, scenario: str, inundepth: float, days: float or int,
-                 month: int):
+    def __init__(self, area: float, type: str, subtype: str or list, scenario: str, inundepth: float):
         """Initialises the calc."""
         # Save attributes
         self.area = area
@@ -97,11 +96,8 @@ class Calc():
             for indx in range(len(subtype)):
                 subtype[indx] = subtype[indx].upper()
             self.subtype = subtype
-        self.usage = usage.upper()
         self.scenario = scenario.upper()
         self.inundepth = inundepth
-        self.days = days
-        self.month = month
 
         # H
         self.damagedata = \
@@ -116,7 +112,7 @@ class Calc():
                     "BIJEENKOMST":       (163, 380, 271),
                     "CEL":               (27, 81, 54),
                     "SPORT":             (27, 81, 54),
-                    "OVERIG":            (27, 81, 54)
+                    "OVERIGE":            (27, 81, 54)
                 },
             "INFRASTRUCTURE":
                 {
@@ -159,16 +155,16 @@ class Calc():
 
         self.inunfactor = inundationdepthreductionfactor(self.type, self.subtype, self.inundepth)
 
-        self.durfactor = durationreductionfactor(self.type, self.subtype, self.days)
-
-        self.seasonfactor = seasonreductionfactor(self.type, self.subtype, self.month)
+        # self.durfactor = durationreductionfactor(self.type, self.subtype, self.days)
+        #
+        # self.seasonfactor = seasonreductionfactor(self.type, self.subtype, self.month)
 
     def calc(self):
         """Calculates water damage and returns it."""
         if self.scenario == "LOW":
-            return self.area * (self.minimum * self.inunfactor * self.durfactor * self.seasonfactor)
+            return self.area * (self.minimum * self.inunfactor)
         elif self.scenario == "MEDIUM":
-            return self.area * (self.average * self.inunfactor * self.durfactor * self.seasonfactor)
+            return self.area * (self.average * self.inunfactor)
         elif self.scenario == "HIGH":
-            return self.area * (self.maximum * self.inunfactor * self.durfactor * self.seasonfactor)
+            return self.area * (self.maximum * self.inunfactor)
 

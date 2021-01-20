@@ -1,19 +1,27 @@
 import shapefile
-import io
-from create_directory import create_directory
+import os
+from calculator.main import Calc
 
 
-def create_data(files, scenario, values):
-    # print(files)
-    # create_directory(files)
-    # Shapefile reader is used to read .shp files so it can be used
-    shpfile = shapefile.Reader(io.BytesIO(files))
-    print(shpfile)
+def create_data(nbh, scenario, values):
+    # get the pandPolygon for the correct neighbourhood
+    path = get_neighbourhood_path(nbh)
+    # use it in the shapefile reader
+    shpfile = shapefile.Reader(path)
     # get_attributes requires the shp file and the names of the attributes you want
     attributes = get_attributes(values, shpfile)
     buildings = create_buildings(attributes, scenario)
 
     return buildings
+
+
+def get_neighbourhood_path(nbh):
+    neighbourhoods = os.listdir('../Buurten')
+    current_path = "../Buurten"
+    for neighbourhood in neighbourhoods:
+        if neighbourhood == nbh:
+            nbh_path = os.path.join(current_path, nbh, 'pandPolygon_Area075.shp')
+            return nbh_path
 
 
 def get_attributes(attributes, file):
@@ -35,10 +43,29 @@ def get_attributes(attributes, file):
 
 
 def change_subtype(subtype):
-    # As far as we know all subtypes end with "functie" so we simple remove this so that it is compatible with the calculator
-    if "functie" in subtype:
-        new_sub = subtype.replace('functie', '')
-        return new_sub.upper()
+    # remove spaces in string
+    subtype = subtype.replace(' ', '')
+    # some subtype values contain more than 1 subtype. We turn these strings into lists
+    if ',' in subtype:
+        subtype_list = subtype.split(',')
+        # As far as we know all subtypes end with "functie" or "gebruiks" so we simple remove this so that it is compatible with the calculator
+        for x in range(0, len(subtype_list)):
+            if "functie" in subtype_list[x]:
+                subtype_list[x] = subtype_list[x].replace('functie', '')
+                if "gebruiks" in subtype_list[x]:
+                    subtype_list[x] = subtype_list[x].replace('gebruiks', '')
+
+        return [x.upper() for x in subtype_list]
+
+    else:
+        # As far as we know all subtypes end with "functie" or "gebruiks" so we simple remove this so that it is compatible with the calculator
+        if "functie" in subtype:
+            subtype = subtype.replace('functie', '')
+            if "gebruiks" in subtype:
+                subtype = subtype.replace('gebruiks', '')
+                return subtype.upper()
+            else:
+                return subtype.upper()
 
 
 def create_buildings(data, scenario):
@@ -53,6 +80,8 @@ def create_buildings(data, scenario):
         print("subtype", building.subtype)
         print("opp", building.area)
         print("inundepth", building.inundepth)
+        print("scen", building.scenario)
+        print('waterschade', building.waterschatting)
 
     return buidlings
 
@@ -65,6 +94,11 @@ class Building:
         self.inundepth = inundepth
         self.scenario = scenario
 
+        calculator = Calc(self.area, 'BEBOUWING',  self.subtype, self.scenario, self.inundepth)
+        self.waterschatting = calculator.calc()
+
+
+create_data('Ondiep', 'HIGH', ['gebruiksdo', 'oppervlakt', 'MAX'])
 
 # # dit is een test path dit wordt later vervangen met het bestand wat van de applicatie komt
 # data = create_data('../../Ondiep/pandPolygon_Area075.shp', 'hoog', ['gebruiksdo', 'oppervlakt', 'MAX'])

@@ -197,4 +197,3 @@ if __name__ == '__main__':
         else:
             return 'Vul de nodige gegevens in'
 
-    app.run_server(debug=True)
