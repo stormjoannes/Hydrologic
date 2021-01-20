@@ -138,7 +138,7 @@ if __name__ == '__main__':
                        'backgroundColor': colors['MainBackground']}),
 
             html.Div([
-                # dcc.Graph(figure=fig),
+                dcc.Graph(figure=fig),
                 html.Div('Berekenen waterschade...',
                          id='output_div',
                          style={'color': 'white',
@@ -191,9 +191,7 @@ if __name__ == '__main__':
         if uploadimage != 'None':
             print(uploadimage)
             content_type, content_string = uploadimage[0].split(',')
-
             decoded = base64.b64decode(content_string)
-
         if 'Initial Value' not in antwoorden and None not in antwoorden:
             return create_data(decoded, scenario, ['gebruiksdo', 'oppervlakt', 'MAX'])
         else:

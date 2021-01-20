@@ -127,7 +127,7 @@ if __name__ == '__main__':
                        'backgroundColor': colors['MainBackground']}),
 
             html.Div([
-                # dcc.Graph(figure=fig),
+                dcc.Graph(figure=fig),
                 html.Div('Berekenen waterschade...',
                          id='output_div',
                          style={'color': 'white',
