@@ -82,18 +82,18 @@ if __name__ == '__main__':
                                'width': '50%'}
                     ),
                 ]),
-                html.Label('Prijs',
-                           style={'marginLeft': 22.5}),
-                dcc.Dropdown(
-                    options=[
-                        {'label': 'Boven', 'value': 'boven'},
-                        {'label': 'Onder', 'value': 'onder'},
-                    ],
-                    value='prijs',
-                    id='reparatieMaanden',
-                    style={'marginLeft': 11,
-                           'marginBottom': 11,
-                           'width':'50%'}),
+                # html.Label('Prijs',
+                #            style={'marginLeft': 22.5}),
+                # dcc.Dropdown(
+                #     options=[
+                #         {'label': 'Boven', 'value': 'boven'},
+                #         {'label': 'Onder', 'value': 'onder'},
+                #     ],
+                #     value='prijs',
+                #     id='reparatieMaanden',
+                #     style={'marginLeft': 11,
+                #            'marginBottom': 11,
+                #            'width':'50%'}),
 
                 html.Label('Scenario',
                            style={'marginLeft': 22.5}),
