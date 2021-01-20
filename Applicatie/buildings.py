@@ -11,6 +11,7 @@ def create_data(nbh, scenario, values):
     shpfile = shapefile.Reader(path)
     # get_attributes requires the shp file and the names of the attributes you want
     attributes = get_attributes(values, shpfile)
+    # return a list with all buidlings
     buildings = create_buildings(attributes, scenario)
 
     return buildings
