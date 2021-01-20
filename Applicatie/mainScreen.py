@@ -158,7 +158,6 @@ if __name__ == '__main__':
     ], style={'columnCount': 1,
               'backgroundColor': colors['MainBackground']})
 
-
     def parse_contents(contents, filename, date):
         return html.Div([
             html.H5(filename),
