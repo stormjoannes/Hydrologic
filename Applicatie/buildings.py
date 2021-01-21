@@ -1,12 +1,13 @@
 import shapefile
 import os
 from calculator.main import Calc
+import pandas as pd
 
 
 def create_data(nbh, scenario, values):
     # get the pandPolygon for the correct neighbourhood
     # next to nbh enter the path where you keep all neighbourhoods
-    path = get_neighbourhood_path(nbh, r'C:\tools\transfer_782052_files_3c3b1f65\Hydrologic_Package_2020-12-09\Hydrologic_Package_2020-12-09\Afstroomanalyse\Buurten')
+    path = get_neighbourhood_path(nbh, r'C:\Users\brand\hbo\jaar_2\BS\hydro\Buurten')
     # use it in the shapefile reader
     shpfile = shapefile.Reader(path)
     # get_attributes requires the shp file and the names of the attributes you want
@@ -80,18 +81,26 @@ def is_none(building):
 
 
 def create_buildings(data, scenario):
-    buidlings = []
+    # create a dataframe for the frontend
+    buildings = {'subtype': [], 'area': [], 'inundepth': [], 'scenario': [], 'waterdamage': [], 'lat': [], 'lng': []}
     for x in data:
         # check if x is none
         if not is_none(x):
             """ this line is slightly hardcoded because the attributes (data)
                 needs to be set in the correct order in the class.
                 if you want to edit the attributes or change the order somewhere this line needs to be updated as well 
-                for now it needs the subtype(0), area(1), inundepth(2), scenario, lng(3), lat(3)"""
+                for now it needs the subtype(0), area(1), inundepth(2), scenario, lng(4), lat(3)"""
             building = Building(x[0], x[1], x[2], scenario, x[4], x[3])
-            buidlings.append(building)
+            # add all class variables to the dataframe
+            buildings['subtype'].append(building.subtype)
+            buildings['area'].append(building.area)
+            buildings['inundepth'].append(building.inundepth)
+            buildings['scenario'].append(building.scenario)
+            buildings['lat'].append(building.lat)
+            buildings['lng'].append(building.lng)
+            buildings['waterdamage'].append(building.waterschatting)
 
-    return buidlings
+    return pd.DataFrame(data=buildings)
 
 
 class Building:
@@ -114,3 +123,7 @@ class Building:
                "\n Scenario:" + str(self.scenario) + \
                "\n Latitude:" + str(self.lat) + \
                "\n Longitude:" + str(self.lng)
+
+
+data = create_data('Ondiep', 'HIGH', ['gebruiksdo', 'oppervlakt', 'MAX', 'LAT', 'LNG'])
+print(data.head())
