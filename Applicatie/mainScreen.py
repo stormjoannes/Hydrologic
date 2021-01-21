@@ -29,12 +29,6 @@ def makeMap(data):
         hovermode='closest',
         mapbox=dict(
             accesstoken=mapbox_access_token,
-            bearing=0,
-            center=dict(
-                lat=52.1064958,
-                lon=5.101
-            ),
-            pitch=0,
             zoom=14.5
         ),
     )
