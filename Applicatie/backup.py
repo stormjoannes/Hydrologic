@@ -161,9 +161,10 @@ if __name__ == '__main__':
             longtitudes = []
             calculations = []
             for i in data:
-                latitudes.append(i.lat)
-                longtitudes.append(i.lng)
+                latitudes.append(float(i.lat) - 0.0009846483658)
+                longtitudes.append(float(i.lng) - 0.0003943217995)
                 calculations.append('geschatte waterschade: €' + str(round(i.waterschatting, 2)))
+            print(latitudes)
             return dcc.Graph(figure=makeMap(latitudes, longtitudes, calculations),
                              style={'height':'100%',
                                     'width':'100%',
