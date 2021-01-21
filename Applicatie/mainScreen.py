@@ -20,7 +20,7 @@ def makeMap(data):
     fig = px.scatter_mapbox(data, lat='lat',
                             lon='lng',
                             hover_name=data.index,
-                            hover_data=['subtype', "waterschade (totaal in euro's)", 'oppervlakte (in m²)', 'inundatiediepte'],
+                            hover_data=['subtype', "waterschade (in €)", 'oppervlakte (in m²)', 'inundatiediepte'],
                             zoom=1)
 
     #Instellingen voor de map en het begin pointview
@@ -150,20 +150,6 @@ if __name__ == '__main__':
         #zorgen dat alles ingevuld is voordat je op submit kan drukken en resultaten krijgt
         if 'Initial Value' not in antwoorden and None not in antwoorden:
             data = create_data(gekozen_buurt, scenario, ['gebruiksdo', 'oppervlakt', 'MAX', 'LAT', 'LNG'])
-            # latitudes = []
-            # longtitudes = []
-            # calculations = []
-            # areas = []
-            # inundepths = []
-            # for i in data:
-            #     #De latitude min de correcte van de goede coördinaten
-            #     latitudes.append(float(i.lat) - 0.0009846483658)
-            #     #De latitude min de correcte van de goede coördinaten
-            #     longtitudes.append(float(i.lng) - 0.0003943217995)
-            #     #Format voor de geschatte waterschade
-            #     calculations.append('geschatte waterschade: €' + str(round(i.waterschatting, 2)))
-            #     areas.append('Oppervlakte: ' + str(i.area) + 'm²')
-            #     inundepths.append(i.inundepth)
 
             return dcc.Graph(figure=makeMap(data),
                              style={'height':'100%',
