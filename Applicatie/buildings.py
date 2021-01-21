@@ -69,7 +69,6 @@ def change_subtype(subtype):
         return subtype.upper()
 
 
-
 def is_none(building):
     # check if subtype and area are not 0
     if building[0] == "":
@@ -87,15 +86,10 @@ def create_buildings(data, scenario):
         if not is_none(x):
             """ this line is slightly hardcoded because the attributes (data)
                 needs to be set in the correct order in the class.
-                if you want to edit the attributes or change the order somewhere this line needs to be updated as well """
+                if you want to edit the attributes or change the order somewhere this line needs to be updated as well 
+                for now it needs the subtype(0), area(1), inundepth(2), scenario, lng(3), lat(3)"""
             building = Building(x[0], x[1], x[2], scenario, x[4], x[3])
             buidlings.append(building)
-
-            # print("subtype", building.subtype)
-            # print("opp", building.area)
-            # print("inundepth", building.inundepth)
-            # print("scen", building.scenario)
-            # print('waterschade', building.waterschatting)
 
     return buidlings
 
@@ -113,28 +107,10 @@ class Building:
         calculator = Calc(self.area, 'BEBOUWING',  self.subtype, self.scenario, self.inundepth)
         self.waterschatting = calculator.calc()
 
-#
-# data = create_data('Ondiep', 'HIGH', ['gebruiksdo', 'oppervlakt', 'MAX'])
-# # dit is een test path dit wordt later vervangen met het bestand wat van de applicatie komt
-# data = create_data('../../Ondiep/pandPolygon_Area075.shp', 'hoog', ['gebruiksdo', 'oppervlakt', 'MAX'])
-# print(data)
-# # code om tif bestand om te zetten in een numpy array
-# img = Image.open('../Ondiep/resultaten/waterOpStraat.tif')
-# imnp = np.array(img)
-#
-#
-#
-# fields zijn attributes van het object (het object is in deze context een gebouw dat onderwater kan staan)
-
-
-# # records is een lijst van alle objects (alle gebouwen dus)
-# records = shpfile.records()
-#
-# # met behulp van een for loop kan je bij elk object specifieke data opvragen
-# for x in range(0, len(records)):
-#     rec = shpfile.record(x)
-#     print(rec.MAX)
-#
-# for x in imnp:
-#     print(x)
-
+    def __str__(self):
+        return " Subtype:" + str(self.subtype) + \
+               "\n Area:" + str(self.area) + \
+               "\n Inundepth:" + str(self.inundepth) + \
+               "\n Scenario:" + str(self.scenario) + \
+               "\n Latitude:" + str(self.lat) + \
+               "\n Longitude:" + str(self.lng)
