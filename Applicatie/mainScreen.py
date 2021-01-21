@@ -9,14 +9,6 @@ import plotly.express as px
 def makeMap(data):
     mapbox_access_token = "pk.eyJ1IjoiY2hhcmxpZWNob2YiLCJhIjoiY2trMmozbzJwMGp1NDJwcW94dHAzdmYxZSJ9.PWhcvXLn2xNSZV_gkKpXbw"
     #Invoeren alle latitudes en longtitudes met bijbehorende gegevens
-    # fig = go.Figure(go.Scattermapbox(
-    #         lat=latitudes,
-    #         lon=longtitudes,
-    #         mode='markers',
-    #         marker=go.scattermapbox.Marker(
-    #         ),
-    #         text=calculations,
-    #     ))
     fig = px.scatter_mapbox(data, lat='lat',
                             lon='lng',
                             hover_name=data.index,
