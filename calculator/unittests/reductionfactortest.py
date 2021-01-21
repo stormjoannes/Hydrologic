@@ -36,16 +36,3 @@ class reductionfactortest(unittest.TestCase):
         factor = calc.inunfactor
         self.assertEqual(factor, 1)
 
-    # def test_durationfactorconsistency(self):
-    #     """Tests whether the duration reduction factor is always consistent (is 1 in different cases)"""
-    #     for i in range(0, 21):
-    #         calc = Calc(area=100, type="BEBOUWING",subtype="ONDERWIJS",scenario="HIGH",inundepth=0.3)
-    #         factor = calc.durfactor
-    #         self.assertEqual(factor, 1)
-    #
-    # def test_seasonfactorconsistency(self):
-    #     """Tests whether the duration reduction factor is always consistent (is 1 in different cases)"""
-    #     for j in range(0,13):
-    #         calc = Calc(area=100, type="BEBOUWING",subtype="ONDERWIJS",scenario="HIGH",inundepth=0.3)
-    #         factor = calc.seasonfactor
-    #         self.assertEqual(factor, 1)

@@ -3,7 +3,7 @@ import dash
 import dash_core_components as dcc
 import dash_html_components as html
 from dash.dependencies import Output, State, Input
-from buildings import create_data
+from Applicatie.buildings import create_data
 import plotly.graph_objects as go
 
 def makeMap(latitudes, longtitudes, calculations):

@@ -155,10 +155,6 @@ class Calc():
 
         self.inunfactor = inundationdepthreductionfactor(self.type, self.subtype, self.inundepth)
 
-        # self.durfactor = durationreductionfactor(self.type, self.subtype, self.days)
-        #
-        # self.seasonfactor = seasonreductionfactor(self.type, self.subtype, self.month)
-
     def calc(self):
         """Calculates water damage and returns it."""
         if self.scenario == "LOW":
