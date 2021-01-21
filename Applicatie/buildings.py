@@ -86,7 +86,8 @@ def create_buildings(data, scenario):
         if not is_none(x):
             """ this line is slightly hardcoded because the attributes (data)
                 needs to be set in the correct order in the class.
-                if you want to edit the attributes or change the order somewhere this line needs to be updated as well """
+                if you want to edit the attributes or change the order somewhere this line needs to be updated as well 
+                for now it needs the subtype(0), area(1), inundepth(2), scenario, lng(3), lat(3)"""
             building = Building(x[0], x[1], x[2], scenario, x[4], x[3])
             buidlings.append(building)
 
@@ -106,4 +107,10 @@ class Building:
         calculator = Calc(self.area, 'BEBOUWING',  self.subtype, self.scenario, self.inundepth)
         self.waterschatting = calculator.calc()
 
-
+    def __str__(self):
+        return " Subtype:" + str(self.subtype) + \
+               "\n Area:" + str(self.area) + \
+               "\n Inundepth:" + str(self.inundepth) + \
+               "\n Scenario:" + str(self.scenario) + \
+               "\n Latitude:" + str(self.lat) + \
+               "\n Longitude:" + str(self.lng)
