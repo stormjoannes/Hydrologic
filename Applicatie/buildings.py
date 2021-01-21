@@ -116,8 +116,8 @@ class Building:
         self.lng = float(lng) - 0.0003943217995
 
         # Use these 2 lines in your computer is set to a European language
-        self.lat = float(lat.replace(',', '.')) - 0.0009846483658
-        self.lng = float(lng.replace(',', '.')) - 0.0003943217995
+        # self.lat = float(lat.replace(',', '.')) - 0.0009846483658
+        # self.lng = float(lng.replace(',', '.')) - 0.0003943217995
 
         calculator = Calc(self.area, 'BEBOUWING',  self.subtype, self.scenario, self.inundepth)
         self.waterschatting = calculator.calc()
