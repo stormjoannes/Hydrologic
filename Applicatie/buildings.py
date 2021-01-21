@@ -7,7 +7,7 @@ import pandas as pd
 def create_data(nbh, scenario, values):
     # get the pandPolygon for the correct neighbourhood
     # next to nbh enter the path where you keep all neighbourhoods
-    path = get_neighbourhood_path(nbh, r'C:\tools\transfer_782052_files_3c3b1f65\Hydrologic_Package_2020-12-09\Hydrologic_Package_2020-12-09\Afstroomanalyse\Buurten')
+    path = get_neighbourhood_path(nbh, r'C:\Users\Charlie\Desktop\School\Jaar_2\BS\Hydrologic_Package_2020-12-09\Afstroomanalyse\Buurten')
     # use it in the shapefile reader
     shpfile = shapefile.Reader(path)
     # get_attributes requires the shp file and the names of the attributes you want
@@ -110,8 +110,14 @@ class Building:
         self.area = area
         self.inundepth = inundepth
         self.scenario = scenario
-        self.lat = float(float(lat) - 0.0009846483658)
-        self.lng = float(float(lng) - 0.0003943217995)
+
+        # Use these 2 lines if your computer is set to an non-European language
+        self.lat = float(lat) - 0.0009846483658
+        self.lng = float(lng) - 0.0003943217995
+
+        # Use these 2 lines in your computer is set to a European language
+        self.lat = float(lat.replace(',', '.')) - 0.0009846483658
+        self.lng = float(lng.replace(',', '.')) - 0.0003943217995
 
         calculator = Calc(self.area, 'BEBOUWING',  self.subtype, self.scenario, self.inundepth)
         self.waterschatting = calculator.calc()
