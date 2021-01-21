@@ -4,18 +4,25 @@ import dash_html_components as html
 from dash.dependencies import Output, State, Input
 from Applicatie.buildings import create_data
 import plotly.graph_objects as go
+import plotly.express as px
 
-def makeMap(latitudes, longtitudes, calculations):
+def makeMap(latitudes, longtitudes, calculations, area, inundepths):
     mapbox_access_token = "pk.eyJ1IjoiY2hhcmxpZWNob2YiLCJhIjoiY2trMmozbzJwMGp1NDJwcW94dHAzdmYxZSJ9.PWhcvXLn2xNSZV_gkKpXbw"
     #Invoeren alle latitudes en longtitudes met bijbehorende gegevens
-    fig = go.Figure(go.Scattermapbox(
-            lat=latitudes,
-            lon=longtitudes,
-            mode='markers',
-            marker=go.scattermapbox.Marker(
-            ),
-            text=calculations,
-        ))
+    # fig = go.Figure(go.Scattermapbox(
+    #         lat=latitudes,
+    #         lon=longtitudes,
+    #         mode='markers',
+    #         marker=go.scattermapbox.Marker(
+    #         ),
+    #         text=calculations,
+    #     ))
+    fig = px.scatter_mapbox(lat=latitudes,
+                            lon=longtitudes,
+                            hover_name=calculations,
+                            labels={'Timestep_str': 'Date'},
+                            hover_data=[area, inundepths],
+                            zoom=1)
 
     #Instellingen voor de map en het begin pointview
     fig.update_layout(
@@ -147,6 +154,8 @@ if __name__ == '__main__':
             latitudes = []
             longtitudes = []
             calculations = []
+            areas = []
+            inundepths = []
             for i in data:
                 #De latitude min de correcte van de goede coördinaten
                 latitudes.append(float(i.lat) - 0.0009846483658)
@@ -154,8 +163,10 @@ if __name__ == '__main__':
                 longtitudes.append(float(i.lng) - 0.0003943217995)
                 #Format voor de geschatte waterschade
                 calculations.append('geschatte waterschade: €' + str(round(i.waterschatting, 2)))
-            print(latitudes)
-            return dcc.Graph(figure=makeMap(latitudes, longtitudes, calculations),
+                areas.append('Oppervlakte: ' + str(i.area) + 'm²')
+                inundepths.append(i.inundepth)
+
+            return dcc.Graph(figure=makeMap(latitudes, longtitudes, calculations, areas, inundepths),
                              style={'height':'100%',
                                     'width':'100%',
                                     'color': colors['MainBackground']})
