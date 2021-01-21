@@ -82,7 +82,7 @@ def is_none(building):
 
 def create_buildings(data, scenario):
     # create a dataframe for the frontend
-    buildings = {'subtype': [], 'area': [], 'inundepth': [], 'scenario': [], 'waterdamage': [], 'lat': [], 'lng': []}
+    buildings = {'subtype': [], 'oppervlakte (in m²)': [], 'inundatiediepte': [], 'scenario': [], "waterschade (totaal in euro's)": [], 'lat': [], 'lng': []}
     for x in data:
         # check if x is none
         if not is_none(x):
@@ -93,12 +93,12 @@ def create_buildings(data, scenario):
             building = Building(x[0], x[1], x[2], scenario, x[4], x[3])
             # add all class variables to the dataframe
             buildings['subtype'].append(building.subtype)
-            buildings['area'].append(building.area)
-            buildings['inundepth'].append(building.inundepth)
+            buildings['oppervlakte (in m²)'].append(building.area)
+            buildings['inundatiediepte'].append(building.inundepth)
             buildings['scenario'].append(building.scenario)
             buildings['lat'].append(building.lat)
             buildings['lng'].append(building.lng)
-            buildings['waterdamage'].append(building.waterschatting)
+            buildings["waterschade (totaal in euro's)"].append(round(building.waterschatting, 2))
 
     return pd.DataFrame(data=buildings)
 
@@ -110,8 +110,8 @@ class Building:
         self.area = area
         self.inundepth = inundepth
         self.scenario = scenario
-        self.lat = lat
-        self.lng = lng
+        self.lat = float(lat - 0.0009846483658)
+        self.lng = float(lng - 0.0003943217995)
 
         calculator = Calc(self.area, 'BEBOUWING',  self.subtype, self.scenario, self.inundepth)
         self.waterschatting = calculator.calc()
@@ -126,4 +126,4 @@ class Building:
 
 
 data = create_data('Ondiep', 'HIGH', ['gebruiksdo', 'oppervlakt', 'MAX', 'LAT', 'LNG'])
-print(data.head())
+print(data.index)
