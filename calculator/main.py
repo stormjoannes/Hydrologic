@@ -83,21 +83,24 @@ def seasonreductionfactor(type: str, subtype: str, month: int):
 class Calc():
     """Calculates water damage based on a couple of parameters;
     - area (in m^2)
-    - type (urban, infrastructure, agriculture, nature)"""
+    - type (urban, infrastructure, agriculture, nature)
+    - subtype (subtypes of the given type, string (single) or list (multiple)
+    - scenario (LOW, MEDIUM, HIGH; str, dictates which price should be chosen)
+    - inundepth (height which the water reaches in a building)"""
 
     def __init__(self, area: float, type: str, subtype: str or list, scenario: str, inundepth: float):
         """Initialises the calc."""
         # Save attributes
-        self.area = area
-        self.type = type.upper()
-        if isinstance(subtype,str):
+        self.area = area  # Area in m^2
+        self.type = type.upper()  # Category, can be BEBOUWING, INFRASTRUCTUUR, etc.
+        if isinstance(subtype,str):  # ONDERWIJS, INDUSTRIE for type BEBOUWING, etc, supports a list with multiple subtypes.
             self.subtype = subtype.upper()
         elif isinstance(subtype,list):
             for indx in range(len(subtype)):
                 subtype[indx] = subtype[indx].upper()
             self.subtype = subtype
-        self.scenario = scenario.upper()
-        self.inundepth = inundepth
+        self.scenario = scenario.upper()  # Scenario dictates the chosen price, as shown below.
+        self.inundepth = inundepth  # Height which the water reaches in a given building.
 
         # H
         self.damagedata = \
@@ -145,11 +148,11 @@ class Calc():
                     "OVERIG":            (869,1303,1086),
                 }}
 
-        if isinstance(self.subtype,list):
+        if isinstance(self.subtype,list):  # If theres multiple subtypes, get the subtype with the highest average damage/m^2
             self.subtype = sorted(self.subtype,key=lambda x: self.damagedata[self.type][x][2])[-1]
         data = self.damagedata[self.type][self.subtype]
 
-        self.minimum = data[0]
+        self.minimum = data[0]  # Get the min, average, max for the given subtype.
         self.maximum = data[1]
         self.average = data[2]
 
