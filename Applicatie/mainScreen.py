@@ -7,6 +7,9 @@ import plotly.graph_objects as go
 import plotly.express as px
 
 def makeMap(data):
+    """"
+    instellingen van mapbox zetten
+    """
     mapbox_access_token = "pk.eyJ1IjoiY2hhcmxpZWNob2YiLCJhIjoiY2trMmozbzJwMGp1NDJwcW94dHAzdmYxZSJ9.PWhcvXLn2xNSZV_gkKpXbw"
     #Invoeren alle latitudes en longtitudes met bijbehorende gegevens
     fig = px.scatter_mapbox(data, lat='lat',
@@ -61,6 +64,7 @@ if __name__ == '__main__':
                            style={'marginLeft': 22.5}),
                 html.Div([
                     dcc.Dropdown(
+                        #opties verschillende buurten
                         id='gekozen_buurt',
                         options=[
                             {'label': 'Ondiep', 'value': 'Ondiep'},
@@ -75,6 +79,7 @@ if __name__ == '__main__':
 
                 html.Label('Scenario',
                            style={'marginLeft': 22.5}),
+                #laag, gemiddeld of hoog scenario
                 dcc.RadioItems(
                     options=[
                         {'label': 'Laag', 'value': 'LOW'},
@@ -105,7 +110,7 @@ if __name__ == '__main__':
                        'backgroundColor': colors['MainBackground']}),
 
             html.Div([
-                # dcc.Graph(figure=fig, style={'display':'None'}),
+                #Output div
                 html.Div('Berekenen waterschade...',
                          id='output_div',
                          style={'color': 'white',
@@ -125,13 +130,17 @@ if __name__ == '__main__':
     ], style={'columnCount': 1,
               'backgroundColor': colors['MainBackground']})
 
-    #verkrijgen van de input values
+    #ophalen van de input values
     @app.callback(Output('output_div', 'children'),
                   Input('submitButton', 'n_clicks'),
                   State('gekozen_buurt', 'value'),
                   State('scenario', 'value'))
 
     def update_output(clicks, gekozen_buurt, scenario):
+        """
+        Aanroepen calculator met variabelen
+        weergeven van mapbox met coördinaten en waterschade
+        """
         antwoorden = [gekozen_buurt, scenario]
         #zorgen dat alles ingevuld is voordat je op submit kan drukken en resultaten krijgt
         if 'Initial Value' not in antwoorden and None not in antwoorden:
