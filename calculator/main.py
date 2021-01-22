@@ -110,12 +110,12 @@ class Calc():
                     "INDUSTRIE":         (163, 380, 271),
                     "WINKEL":            (163, 380, 271),
                     "KANTOOR":           (163, 380, 271),
-                    "LOGIESTIEK":        (163, 380, 271),
+                    "LOGIES":        (163, 380, 271),
                     "WOON":              (163, 380, 271),
                     "BIJEENKOMST":       (163, 380, 271),
                     "CEL":               (27, 81, 54),
                     "SPORT":             (27, 81, 54),
-                    "OVERIGE":           (27, 81, 54)
+                    "OVERIGE":           (27, 81, 54),
                 },
             "INFRASTRUCTURE":
                 {

@@ -68,7 +68,7 @@ if __name__ == '__main__':
                         id='gekozen_buurt',
                         options=[
                             {'label': 'Ondiep', 'value': 'Ondiep'},
-                            {'label': 'Witte Vrouwen', 'value': 'Witte Vrouwen'}
+                            {'label': 'Witte Vrouwen', 'value': 'Wittevrouwen'}
                         ],
                         value='Initial Value',
                         style={'marginLeft': 11,

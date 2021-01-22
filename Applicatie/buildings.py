@@ -7,7 +7,7 @@ import pandas as pd
 def create_data(nbh, scenario, values):
     # get the pandPolygon for the correct neighbourhood
     # next to nbh enter the path where you keep all neighbourhoods
-    path = get_neighbourhood_path(nbh, r'C:\Users\Charlie\Desktop\School\Jaar_2\BS\Hydrologic_Package_2020-12-09\Afstroomanalyse\Buurten')
+    path = get_neighbourhood_path(nbh, r'C:\tools\transfer_782052_files_3c3b1f65\Hydrologic_Package_2020-12-09\Hydrologic_Package_2020-12-09\Afstroomanalyse\Buurten')
     # use it in the shapefile reader
     shpfile = shapefile.Reader(path)
     # get_attributes requires the shp file and the names of the attributes you want
