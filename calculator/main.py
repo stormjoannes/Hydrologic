@@ -102,7 +102,7 @@ class Calc():
         self.scenario = scenario.upper()  # Scenario dictates the chosen price, as shown below.
         self.inundepth = inundepth  # Height which the water reaches in a given building.
 
-        # H
+        # Schade data opgehaald van https://www.waterschadeschatter.nl/static_media/lizard_damage/help/gebruikers%20handleiding.pdf
         self.damagedata = \
             {"BEBOUWING":
                 {
@@ -115,7 +115,7 @@ class Calc():
                     "BIJEENKOMST":       (163, 380, 271),
                     "CEL":               (27, 81, 54),
                     "SPORT":             (27, 81, 54),
-                    "OVERIGE":            (27, 81, 54)
+                    "OVERIGE":           (27, 81, 54)
                 },
             "INFRASTRUCTURE":
                 {
@@ -160,6 +160,13 @@ class Calc():
 
     def calc(self):
         """Calculates water damage and returns it."""
+        # Formula adapted from following source (direct damage only);
+        # https://www.waterschadeschatter.nl/static_media/lizard_damage/help/schadeberekening.pdf
+        # In the formula, a 'scenario' damage amount is specified, but not further defined,
+        # here we choose to allow the user to define the scenario to define the price that is
+        # used in the calculator. TODO: Further research should focus on the significance of these 'scenarios' in the formula.
+        # Additionally, due to refactors, the model has been simplified significantly.
+
         if self.scenario == "LOW":
             return self.area * (self.minimum * self.inunfactor)
         elif self.scenario == "MEDIUM":
