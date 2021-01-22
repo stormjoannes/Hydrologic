@@ -60,7 +60,7 @@ if __name__ == '__main__':
         html.Div([
             #Linker div voor alle inputs
             html.Div([
-                html.Label('Kies de benodigde files van de buurt',
+                html.Label('Buurt:',
                            style={'marginLeft': 22.5}),
                 html.Div([
                     dcc.Dropdown(
