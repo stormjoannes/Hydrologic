@@ -150,13 +150,25 @@ class Calc():
 
         if isinstance(self.subtype,list):  # If theres multiple subtypes, get the subtype with the highest average damage/m^2
             self.subtype = sorted(self.subtype,key=lambda x: self.damagedata[self.type][x][2])[-1]
-        data = self.damagedata[self.type][self.subtype]
 
-        self.minimum = data[0]  # Get the min, average, max for the given subtype.
-        self.maximum = data[1]
-        self.average = data[2]
 
-        self.inunfactor = inundationdepthreductionfactor(self.type, self.subtype, self.inundepth)
+        # if the subtype is not found the subtype is set on "OVERIGE
+        try:
+            data = self.damagedata[self.type][self.subtype]
+
+            self.minimum = data[0]  # Get the min, average, max for the given subtype.
+            self.maximum = data[1]
+            self.average = data[2]
+
+            self.inunfactor = inundationdepthreductionfactor(self.type, self.subtype, self.inundepth)
+        except KeyError:
+            data = self.damagedata[self.type]['OVERIGE']
+
+            self.minimum = data[0]  # Get the min, average, max for the given subtype.
+            self.maximum = data[1]
+            self.average = data[2]
+
+            self.inunfactor = inundationdepthreductionfactor(self.type, self.subtype, self.inundepth)
 
     def calc(self):
         """Calculates water damage and returns it."""
