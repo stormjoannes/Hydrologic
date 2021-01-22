@@ -149,8 +149,8 @@ class Calc():
                 }}
 
         if isinstance(self.subtype,list):  # If theres multiple subtypes, get the subtype with the highest average damage/m^2
-            self.subtype = sorted(self.subtype,key=lambda x: self.damagedata[self.type][x][2])[-1]
 
+            self.subtype = sorted(self.subtype,key=lambda x: self.damagedata[self.type]['OVERIGE'][2] if x not in self.type else self.damagedata[self.type][x][2])[-1]
 
         # if the subtype is not found the subtype is set on "OVERIGE
         try:
